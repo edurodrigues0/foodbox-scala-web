@@ -3,7 +3,7 @@ import { ThemeToggle } from "./theme/theme-toggle";
 
 export function Header() {
   return (
-    <header className="bg-primary text-primary-foreground p-4 flex items-center justify-between">
+    <header className="bg-primary p-4 text-primary-foreground flex items-center justify-between">
       <h1 className="text-4xl text-primary-foreground font-bold select-none">
         Scala
       </h1>

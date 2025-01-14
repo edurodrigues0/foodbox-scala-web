@@ -48,7 +48,9 @@ export function Login() {
 
       navigate('/dashboard', { replace: true })
     } catch {
-      toast.error('Não foi possível se autenticar, tente novamente.')
+      toast.error('Não foi possível se autenticar, tente novamente.', {
+        position: 'top-center'
+      })
     }
   }
 

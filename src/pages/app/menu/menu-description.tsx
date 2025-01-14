@@ -34,7 +34,7 @@ export function MenuDescription({
 
       <div className="flex flex-col gap-0.5">
         <p className="font-bold">Prato Principal</p>
-        <p>{data.menu_name}</p>
+        <p>{data.menu_name.toUpperCase()}</p>
       </div>
 
       <ul className="flex flex-col gap-0.5 list-disc">
@@ -45,7 +45,7 @@ export function MenuDescription({
               key={`${index}-${sideDishes}`}
               className="text-sm"
             >
-              { sideDishes }
+              { sideDishes.toUpperCase() }
             </li>
           ))}
         </div>
@@ -53,7 +53,7 @@ export function MenuDescription({
 
       <div className="flex flex-col gap-0.5">
         <p className="font-bold">Alergenicos</p>
-        <p className="text-sm mt-0.5">{data.menu_allergens ? data.menu_allergens : 'Não possui'}</p>
+        <p className="text-sm mt-0.5">{data.menu_allergens ? data.menu_allergens.toUpperCase() : 'NÃO POSSUI'}</p>
       </div>
     </div>
   )

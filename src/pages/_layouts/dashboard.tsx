@@ -41,7 +41,7 @@ export function DashboardLayout() {
       <Header />
 
       <div className="flex flex-1">
-        <nav className="h-full w-56 flex flex-col justify-start p-6 space-y-4">
+        <nav className="h-full w-52 flex flex-col justify-start p-6 space-y-4">
           <NavLink
             to='/dashboard'
             title="Inicio"

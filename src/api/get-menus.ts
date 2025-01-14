@@ -1,23 +1,27 @@
 import { api } from "@/lib/axios";
+import { Menu } from "@/types/menu";
 
 export interface GetMenusResponse {
-  menus: [
-    {
-      "id": string
-      "name": string
-      "created_at": string
-      "service_date": string
-    }
-  ]
+  menus: Menu[]
   meta: {
-    "page_index": number
-    "per_page": number
-    "total_count": number
+    page_index: number
+    per_page: number
+    total_count: number
   }
 }
 
-export async function getMenus(): Promise<GetMenusResponse> {
-  const response = await api.get('/menus')
+export interface GetMenusQuery {
+  pageIndex?: number | null
+}
+
+export async function getMenus({
+  pageIndex
+}: GetMenusQuery): Promise<GetMenusResponse> {
+  const response = await api.get('/menus', {
+    params: {
+      pageIndex,
+    }
+  })
 
   return response.data
 }

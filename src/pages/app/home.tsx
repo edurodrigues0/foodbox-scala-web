@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import dayjs from "dayjs";
 import { createOrder } from "@/api/create-order";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,9 +14,9 @@ import { useState } from "react";
 import { getUnits } from "@/api/get-units";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getMenusTodayAndTomorrow } from "@/api/get-menus-today-and-tomorrow";
-import { MenuDescription } from "@/components/menu-description";
-import dayjs from "dayjs";
-import { UtensilsCrossed } from "lucide-react";
+import { MenuDescription } from "@/pages/app/menu/menu-description";
+import { UtensilsCrossed, X } from "lucide-react";
+import InputMask from "react-input-mask"
 
 const createOrderForm = z.object({
   cpf: z
@@ -42,6 +43,7 @@ export function Home() {
 
   const {
     reset,
+    watch,
     register,
     handleSubmit,
     formState: { isSubmitting },
@@ -105,8 +107,8 @@ export function Home() {
       const firstName = name.split(" ")[0];
 
       toast.success(`${firstName}, sua marmita foi solicitada com sucesso.`, {
-        position: "top-center",
-      });
+        position: 'top-center',
+      })
     } catch (error) {
       console.error(error);
       toast.error("Erro ao solicitar marmita.", {
@@ -128,6 +130,14 @@ export function Home() {
   }
 
   const hasMenus = menus?.menus && menus.menus.length > 0;
+
+  function maskCpf(value: string){
+    value=value.replace(/\D/g,"")            
+    value=value.replace(/(\d{3})(\d)/,"$1.$2")
+    value=value.replace(/(\d{3})(\d)/,"$1.$2")
+    value=value.replace(/(\d{3})(\d{1,2})$/,"$1-$2")
+    return value
+  }
 
   return (
     <div className="flex flex-1 items-center justify-center gap-6 bg-primary-foreground">
@@ -191,14 +201,30 @@ export function Home() {
         description="Faça seu pedido para o dia selecionado"
       >
         <form onSubmit={handleSubmit(handleCreateOrder)} className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <Label htmlFor="cpf">Seu CPF</Label>
-            <Input
-              id="cpf"
-              type="password"
-              autoComplete="off"
+            <InputMask
+              mask="999.999.999-99"
               {...register("cpf")}
-            />
+            >
+              {(inputProps: any) => (
+                <Input
+                  {...inputProps}
+                  id="cpf"
+                  placeholder="000.000.000-00"
+                  autoComplete="off"
+                  className="[&::-webkit-inner-spin-button]:appearance-none"
+                />
+              )}
+            </InputMask>
+
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="absolute right-2 top-[50%]"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           <Button

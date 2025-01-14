@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DialogClose,
   DialogContent,
@@ -7,15 +7,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+} from "@/components/ui/dialog";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { Accompaniments } from "./accompaniments";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createMenu } from "@/api/create-menu";
 import { toast } from "sonner";
+import { Accompaniments } from "@/components/accompaniments";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { getMenu } from "@/api/get-menu";
 
 const createMenuForm = z.object({
   name: z.string(),
@@ -26,7 +27,7 @@ const createMenuForm = z.object({
 
 type CreateMenuForm = z.infer<typeof createMenuForm>
 
-export function NewMenuDialog() {
+export function MenuDialog() {
   const {
     handleSubmit,
     register,
@@ -46,14 +47,16 @@ export function NewMenuDialog() {
   const [accompaniments, setAccompaniments] = useState([""])
 
   const { mutateAsync: createMenuFn } = useMutation({
-    mutationFn: createMenu
+    mutationFn: createMenu,
   })
 
   const handleAddAccompaniment = () => {
-    if (currentAccompaniment.trim() === "") return
+    if (currentAccompaniment.trim() === "") {
+      return
+    }
 
     const currentAccompaniments = getValues("description")
-    setValue("description", [...currentAccompaniments, currentAccompaniment])
+    setValue("description", [...currentAccompaniments, currentAccompaniment.toLowerCase()])
     setCurrentAccompaniment("")
   }
 
@@ -74,16 +77,21 @@ export function NewMenuDialog() {
 
     try {
       const { menu_name: menuName } = await createMenuFn({
-        name: data.name,
+        name: data.name.toLowerCase(),
         serviceDate: data.availableDate,
-        allergens: data.allergens || null,
+        allergens: data.allergens?.toLowerCase() || null,
         description: accompaniments,
       })
 
-      toast.success(`O prato ${menuName} foi adicionado com sucesso.`)
+      toast.success(`O prato ${menuName} foi adicionado com sucesso.`, {
+        position: 'top-center'
+      })
+      
       reset()
     } catch {
-      toast.error('Não foi possível salvar o cardápio, tente novamente.')
+      toast.error('Não foi possível salvar o cardápio, tente novamente.', {
+        position: 'top-center'
+      })
     }
   }
 
