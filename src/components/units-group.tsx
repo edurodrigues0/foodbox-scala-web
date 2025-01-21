@@ -27,7 +27,7 @@ export function UnitsGroup({ units, onSelectUnit }: UnitsGroupProps) {
         return "III"
       case 4:
         return "IV"
-      case 5:
+      case 99:
         return "SCL"
       default:
         return null

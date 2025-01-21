@@ -1,24 +1,21 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Building, LogOut } from "lucide-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getProfile } from "@/api/get-profile";
+import { useMutation } from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
 import { signOut } from "@/api/sign-out";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/auth-context";
 
 export function ProfileMenu() {
+  const { user, setUser } = useAuth()
   const navigate = useNavigate()
-
-  const { data: profile, isLoading: isProfileLoading } = useQuery({
-    queryKey: ['profile'],
-    queryFn: getProfile,
-    staleTime: Infinity
-  })
 
   const { mutateAsync: signOutFn, isPending: isSignOut } = useMutation({
     mutationFn: signOut,
     onSuccess: () => {
+      localStorage.removeItem('@foodbox.scala:auth')
+      setUser(null)
       navigate('/login', { replace: true })
     }
   })
@@ -31,10 +28,10 @@ export function ProfileMenu() {
           className="flex items-center gap-2 select-none"
         >
           {
-            isProfileLoading ? (
+            !user ? (
               <Skeleton className="h-4 w-40" />
             ) : (
-              profile?.user.name
+              user?.name
             )
           }
         </Button>
@@ -43,11 +40,11 @@ export function ProfileMenu() {
       <DropdownMenuContent align="end" className="w-60">
         <DropdownMenuLabel>
           {
-            isProfileLoading ? (
+            !user ? (
               <Skeleton className="h-4 w-32" />
             ) : (
               <span className="text-xs font-normal text-muted-foreground">
-                { profile?.user.email }
+                { user?.email }
               </span>
             )
           }

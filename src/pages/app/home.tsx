@@ -43,7 +43,6 @@ export function Home() {
 
   const {
     reset,
-    watch,
     register,
     handleSubmit,
     formState: { isSubmitting },
@@ -131,18 +130,15 @@ export function Home() {
 
   const hasMenus = menus?.menus && menus.menus.length > 0;
 
-  function maskCpf(value: string){
-    value=value.replace(/\D/g,"")            
-    value=value.replace(/(\d{3})(\d)/,"$1.$2")
-    value=value.replace(/(\d{3})(\d)/,"$1.$2")
-    value=value.replace(/(\d{3})(\d{1,2})$/,"$1-$2")
-    return value
-  }
-
   return (
-    <div className="flex flex-1 items-center justify-center gap-6 bg-primary-foreground">
-      <Card title="Cardápio" description="Confira o cardápio para hoje e amanhã">
-        <p className="mb-1">Unidade</p>
+    <div className="flex flex-1 items-center justify-center gap-6 bg-secondary">
+      <Card
+        title="Cardápio"
+        description="Confira o cardápio para hoje e amanhã"
+      >
+        <p className="mb-1">
+          Unidade
+        </p>
         <div className="flex items-center justify-center p-2 bg-gray-300 dark:bg-gray-700 rounded-md mb-2">
           {unitsResponse ? (
             <UnitsGroup

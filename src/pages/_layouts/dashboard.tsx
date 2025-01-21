@@ -1,13 +1,14 @@
 import { Header } from "@/components/header";
-import { NavLink } from "@/components/nav-link";
+import { Sidebar } from "@/components/sidebar";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/context/auth-context";
 import { api } from "@/lib/axios";
 import { isAxiosError } from "axios";
-import { Home, Utensils, SquareMenu } from "lucide-react";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export function DashboardLayout() {
+  const { user } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -41,25 +42,7 @@ export function DashboardLayout() {
       <Header />
 
       <div className="flex flex-1">
-        <nav className="h-full w-52 flex flex-col justify-start p-6 space-y-4">
-          <NavLink
-            to='/dashboard'
-            title="Inicio"
-            icon={Home}
-          />
-
-          <NavLink
-            to="/dashboard/pedidos"
-            title="Pedidos"
-            icon={Utensils}
-          />
-
-          <NavLink
-            to="/dashboard/cardapio"
-            title="Cardápio"
-            icon={SquareMenu}
-          />
-        </nav>
+        <Sidebar role={user?.role} />
 
         <Separator className="bg-primary" orientation="vertical" />
 

@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { useMutation } from "@tanstack/react-query";
 import { authenticate } from "@/api/authenticate";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/auth-context";
 
 const authenticateForm = z.object({
   email: z.string().email(),
@@ -17,6 +18,7 @@ type AuthenticateForm = z.infer<typeof authenticateForm>
 
 export function Login() {
   const navigate = useNavigate()
+  const { setUser } = useAuth()
 
   const {
     register,
@@ -41,12 +43,25 @@ export function Login() {
     }
 
     try {
-      await authenticateFn({
+      const { user } = await authenticateFn({
         email: data.email,
         password: data.password,
       })
 
-      navigate('/dashboard', { replace: true })
+      if (user) {
+        localStorage.setItem('@foodbox.scala:auth', JSON.stringify(user))
+        setUser(user)
+      }
+
+      if (user.role === 'restaurant') {
+        navigate('/restaurante/dashboard', {
+          replace: true,
+        })
+      } else if (user.role === 'rh') {
+        navigate('/rh/dashboard', {
+          replace: true,
+        }) 
+      }
     } catch {
       toast.error('Não foi possível se autenticar, tente novamente.', {
         position: 'top-center'
