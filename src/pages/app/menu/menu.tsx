@@ -100,6 +100,7 @@ export function Menu() {
                     key={menu.id}
                     data={menu}
                     onDeleteMenu={handleDeleteMenu}
+                    isDeleteDisabled={isDeleteMenu}
                   />
                 )
               })}

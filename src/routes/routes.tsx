@@ -6,21 +6,23 @@ import { ProtectedRoute } from './protected-route';
 import { DashboardLayout } from '@/pages/_layouts/dashboard';
 import { Dashboard } from '@/pages/app/dashboard';
 import { Menu } from '@/pages/app/menu/menu';
-import { Orders } from '@/pages/app/orders';
+import { Orders } from '@/pages/app/orders/orders';
 import { RhDashboard } from '@/pages/rh/rh-dashboard';
-import { useAuth } from '@/context/auth-context';
 import { Colaborators } from '@/pages/rh/colaborators/colaborators';
 import { RegisterColaborator } from '@/pages/rh/register/register-colaborator';
-import { Supervisors } from '@/pages/rh/supervisors/supervisors';
+import { Units } from '@/pages/rh/units/units';
+import { Sectors } from '@/pages/rh/sectors/sectors';
+import { Restaurants } from '@/pages/rh/restaurants/restaurants';
+import { Orders as AdminOrders } from '@/pages/rh/orders/orders'
+import { Users } from '@/pages/rh/users/users';
+import { Unauthorized } from '@/pages/unauthorized';
+import { PublicRoute } from './public-routes';
 
 export function AppRoutes() {
-  const { user } = useAuth()
-  const redirectByRole = user ? `/${user.role}/dashboard` : '/'
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={ <ProtectedRoute redirectTo={redirectByRole} /> }>
+        <Route element={ <PublicRoute /> }>
           <Route element={ <AppLayout /> }>
             <Route index element={ <Home /> } />
             <Route path='/login' element={ <Login /> } />
@@ -40,9 +42,15 @@ export function AppRoutes() {
             <Route path='/rh/dashboard' element={ <RhDashboard /> } />
             <Route path='/rh/dashboard/colaboradores' element={ <Colaborators /> } />
             <Route path='/rh/dashboard/colaboradores/cadastro' element={ <RegisterColaborator /> } />
-            <Route path='/rh/dashboard/supervisores' element={ <Supervisors /> } />
+            <Route path='/rh/dashboard/usuarios' element={ <Users /> } />
+            <Route path='/rh/dashboard/unidades' element={ <Units /> } />
+            <Route path='/rh/dashboard/setores' element={ <Sectors /> } />
+            <Route path='/rh/dashboard/restaurantes' element={ <Restaurants /> } />
+            <Route path='/rh/dashboard/pedidos' element={ <AdminOrders /> } />
           </Route>
         </Route>
+
+        <Route path='/unauthorized' element={ <Unauthorized /> } />
       </Routes>
     </BrowserRouter>
   )

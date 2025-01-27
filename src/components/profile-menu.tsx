@@ -16,7 +16,7 @@ export function ProfileMenu() {
     onSuccess: () => {
       localStorage.removeItem('@foodbox.scala:auth')
       setUser(null)
-      navigate('/login', { replace: true })
+      navigate('/', { replace: true })
     }
   })
 

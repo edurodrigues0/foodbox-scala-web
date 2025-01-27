@@ -70,7 +70,7 @@ export function Login() {
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-6 bg-primary-foreground">
+    <div className="flex flex-1 flex-col items-center justify-center gap-6 bg-secondary">
       <div className="w-[300px] flex flex-col gap-2 text-center">
         <h1>Acessar painel</h1>
         <p className="text-sm text-muted-foreground">

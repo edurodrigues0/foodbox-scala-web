@@ -194,6 +194,13 @@ export function UpdateMenuDialog({ open, menuId }: UpdateMenuDialogProps) {
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right text-xs" htmlFor="allergens">
+                Alérgenicos
+              </Label>
+              <Input id="allergens" className="col-span-3" {...register("allergens")} />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right text-xs" htmlFor="description">
                 Acompanhamentos
               </Label>
@@ -229,13 +236,6 @@ export function UpdateMenuDialog({ open, menuId }: UpdateMenuDialogProps) {
               >
                 Adicionar Acompanhamento
               </Button>
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right text-xs" htmlFor="allergens">
-                Alérgenicos
-              </Label>
-              <Input id="allergens" className="col-span-3" {...register("allergens")} />
             </div>
           </div>
 

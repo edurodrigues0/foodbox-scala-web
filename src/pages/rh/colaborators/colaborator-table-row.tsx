@@ -10,14 +10,14 @@ interface Colaborator {
   unit_name: string
 }
 
-interface MenuTableRowProps {
+interface ColaboratorsTableRowProps {
   data: Colaborator
-  onDeleteMenu?: ({ menuId }: DeleteMenuParams) => void
+  onDeleteColaborator?: ({ menuId }: DeleteMenuParams) => void
 }
 
 export function ColaboratorsTableRow({
   data,
-}: MenuTableRowProps) {
+}: ColaboratorsTableRowProps) {
   return (
     <TableRow>
       <TableCell>

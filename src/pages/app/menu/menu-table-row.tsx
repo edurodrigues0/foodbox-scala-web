@@ -15,11 +15,13 @@ interface MenuTableRowProps {
     description: string[]
   }
   onDeleteMenu: ({ menuId }: DeleteMenuParams) => void
+  isDeleteDisabled: boolean
 }
 
 export function MenuTableRow({
   data,
   onDeleteMenu,
+  isDeleteDisabled,
 }: MenuTableRowProps) {
   const [isStorageMenuOpen, setIsStorageMenuOpen] = useState(false)
 
@@ -68,6 +70,7 @@ export function MenuTableRow({
         <button
           className="p-1 rounded-md hover:text-gray-500 transition-colors"
           onClick={() => onDeleteMenu({ menuId: data.id })}
+          disabled={isDeleteDisabled}
         >
           <Trash className="w-4 h-4 text-red-700 dark:text-red-500" />
         </button>

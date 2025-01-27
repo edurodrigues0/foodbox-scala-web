@@ -203,7 +203,9 @@ export function MenuDialog() {
               Cancelar
             </Button>
           </DialogClose>
-          <Button variant="success" type="submit">Salvar</Button>
+          <Button variant="success" type="submit">
+            Salvar
+          </Button>
         </DialogFooter>
       </form>
     </DialogContent>

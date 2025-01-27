@@ -1,43 +1,38 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { RegisterSupervisors } from "./register-supervisors";
 import { Edit2 } from "lucide-react";
+import { RestaurantsForm } from "./restaurants-form";
 
-export function Supervisors() {
+export function Restaurants() {
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-4">
         <h1 className="text-3xl font-bold tracking-tighter">
-          Gerencimaneto de Supervisores
+          Restaurantes
         </h1>
 
-        <div className="flex flex-col p-4">
-          <RegisterSupervisors />
+        <div className="flex flex-col flex-1 p-4">
+          <RestaurantsForm />
 
           <div className="flex flex-1 flex-col gap-4 mt-10">
             <h2 className="font-semibold text-xl">
-              Supervisores Cadastrados
+              Restaurantes Cadastrados
             </h2>
-
+            
             <Table>
               <TableHeader>
-                <TableHead>Nome</TableHead>
                 <TableHead>Unidade</TableHead>
-                <TableHead>Setor</TableHead>
+                <TableHead>Nome</TableHead>
                 <TableHead></TableHead>
               </TableHeader>
 
               <TableBody>
                 <TableRow>
                   <TableCell>
-                    Eduardo Rodrigues
+                    Scala I
                   </TableCell>
 
                   <TableCell>
-                    Scala II
-                  </TableCell>
-
-                  <TableCell>
-                    Maturação(1º Turno)
+                    Recanto da Praça
                   </TableCell>
 
                   <TableCell>
@@ -47,15 +42,54 @@ export function Supervisors() {
 
                 <TableRow>
                   <TableCell>
-                    Eduardo Rodrigues
-                  </TableCell>
-
-                  <TableCell>
                     Scala II
                   </TableCell>
 
                   <TableCell>
-                    Maturação(1º Turno)
+                    Recanto da Praça
+                  </TableCell>
+
+                  <TableCell>
+                    <Edit2 />
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell>
+                    Scala III
+                  </TableCell>
+
+                  <TableCell>
+                    Raízes Gastrobar
+                  </TableCell>
+
+                  <TableCell>
+                    <Edit2 />
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell>
+                    Scala IV
+                  </TableCell>
+
+                  <TableCell>
+                    Kavera's Restaurante
+                  </TableCell>
+
+                  <TableCell>
+                    <Edit2 />
+                  </TableCell>
+                </TableRow>
+
+
+                <TableRow>
+                  <TableCell>
+                    SCL
+                  </TableCell>
+
+                  <TableCell>
+                    Restaurante Armazém
                   </TableCell>
 
                   <TableCell>

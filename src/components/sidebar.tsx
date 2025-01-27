@@ -1,4 +1,14 @@
-import { Home, Utensils, SquareMenu, LucideProps, Users2, Building2, ClipboardList } from "lucide-react";
+import {
+  Home,
+  Utensils,
+  SquareMenu,
+  LucideProps,
+  Users2,
+  Building2,
+  ClipboardList,
+  LayoutDashboard,
+  UtensilsCrossed,
+} from "lucide-react";
 import { NavLink } from "./nav-link";
 
 interface LinkProps {
@@ -20,8 +30,11 @@ const linksByRole: LinksByRole = {
   rh: [
     { to: "/rh/dashboard", title: "Início", icon: Home },
     { to: "/rh/dashboard/colaboradores", title: "Colaboradores", icon: Users2 },
-    { to: "/rh/dashboard/unidades-e-setores", title: "Unidades e Setores", icon: Building2 },
-    { to: "/rh/dashboard/supervisores", title: "Supervisores", icon: ClipboardList },
+    { to: "/rh/dashboard/usuarios", title: "Usuários", icon: ClipboardList },
+    { to: "/rh/dashboard/unidades", title: "Unidades", icon: Building2 },
+    { to: "/rh/dashboard/setores", title: "Setores", icon: LayoutDashboard },
+    { to: "/rh/dashboard/restaurantes", title: "Restaurantes", icon: Utensils },
+    { to: "/rh/dashboard/pedidos", title: "Pedidos", icon: UtensilsCrossed },
   ],
 }
 

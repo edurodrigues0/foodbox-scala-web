@@ -1,10 +1,10 @@
 import { useAuth } from '@/context/auth-context'
+import { Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
 interface ProtectedRouteProps {
   requiredRoles?: string[]
-  redirectTo?: string
 }
 
 export function ProtectedRoute({ requiredRoles }: ProtectedRouteProps) {
@@ -12,16 +12,24 @@ export function ProtectedRoute({ requiredRoles }: ProtectedRouteProps) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (user !== null) {
+    if (user !== undefined) {
       setLoading(false)
     }
   }, [user])
 
   if (loading) {
-    return <div>...Carregando</div>
+    return (
+      <div className='w-screen h-screen flex items-center justify-center'>
+        <Loader2 className='h-12 w-12 text-primary animate-spin' />
+      </div>
+    )
   }
 
-  if (requiredRoles && !requiredRoles.includes(user?.role || "")) {
+  if (!user) {
+    return <Navigate to='/login' replace />
+  }
+
+  if (requiredRoles && !requiredRoles.includes(user.role ?? "")) {
     return <Navigate to='/unauthorized' replace />
   }
 
