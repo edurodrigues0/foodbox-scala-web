@@ -1,9 +1,19 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Edit2 } from "lucide-react";
+import { Table, TableBody, TableHead, TableHeader } from "@/components/ui/table";
 import { RegisterUsers } from "./register-users";
 import { Pagination } from "@/components/pagination";
+import { UsersTableRow } from "./users-table";
+import { useQuery } from "@tanstack/react-query";
+import { getUsers } from "@/api/get-users";
 
 export function Users() {
+  const {
+    data: result,
+    isLoading: isUsersLoading
+  } = useQuery({
+    queryFn: getUsers,
+    queryKey: ['users']
+  })
+
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-4">
@@ -28,41 +38,14 @@ export function Users() {
               </TableHeader>
 
               <TableBody>
-                <TableRow>
-                  <TableCell>
-                    Eduardo Rodrigues
-                  </TableCell>
-
-                  <TableCell>
-                    Scala II
-                  </TableCell>
-
-                  <TableCell>
-                    Maturação(1º Turno)
-                  </TableCell>
-
-                  <TableCell>
-                    <Edit2 />
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell>
-                    Eduardo Rodrigues
-                  </TableCell>
-
-                  <TableCell>
-                    Scala II
-                  </TableCell>
-
-                  <TableCell>
-                    Maturação(1º Turno)
-                  </TableCell>
-
-                  <TableCell>
-                    <Edit2 />
-                  </TableCell>
-                </TableRow>
+                { result && result.users.map((user) => {
+                  return (
+                    <UsersTableRow
+                      key={user.id}
+                      data={user}
+                    />
+                  )
+                })}
               </TableBody>
             </Table>
 

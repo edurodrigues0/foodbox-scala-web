@@ -8,6 +8,7 @@ export interface RegisterUserBody {
   role: UserRoleEnum,
   restaurantName: string | undefined
   sectorId: string | undefined
+  unitId: string | undefined
 }
 
 export interface RegisterUserResponse {

@@ -14,7 +14,6 @@ import { z } from "zod";
 const registerUserSchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  role: z.nativeEnum(UserRoleEnum).optional(),
   restaurantName: z.string().optional(),
   sectorId: z.string().optional(),
 })
@@ -31,11 +30,7 @@ export function RegisterUsers() {
     control,
     formState: { isSubmitting },
     reset
-  } = useForm<RegisterUserSchema>({
-    defaultValues: {
-      role: role ?? undefined,
-    }
-  })
+  } = useForm<RegisterUserSchema>()
 
   const { data: unitResult } = useQuery({
     queryKey: ["units"],
@@ -57,9 +52,10 @@ export function RegisterUsers() {
       await registerUserFn({
         email: data.email,
         name: data.name,
-        role: data.role as UserRoleEnum ?? undefined,
+        role: role as unknown as UserRoleEnum ?? undefined,
         restaurantName: data.restaurantName,
         sectorId: data.sectorId,
+        unitId: selectedUnit,
       })
 
       reset()
@@ -135,10 +131,12 @@ export function RegisterUsers() {
 
       <div className="flex items-center justify-between w-full gap-4">
         <div className="flex flex-1 flex-col space-y-2">
-          <Label htmlFor="unit">Unidade</Label>
+          <Label htmlFor="unit">
+            Unidade
+          </Label>
+
           <Select
             disabled={
-              role === "restaurant" as unknown as UserRoleEnum.restaurant ||
               role === "rh" as unknown as UserRoleEnum.rh
             }
             onValueChange={(unit) => setSelectedUnit(unit)}
