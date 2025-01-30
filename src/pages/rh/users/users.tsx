@@ -2,10 +2,17 @@ import { Table, TableBody, TableHead, TableHeader } from "@/components/ui/table"
 import { RegisterUsers } from "./register-users";
 import { Pagination } from "@/components/pagination";
 import { UsersTableRow } from "./users-table";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUsers } from "@/api/get-users";
+import { deleteUser } from "@/api/delete-user";
+import { useSearchParams } from "react-router-dom";
+import { z } from "zod";
+import { toast } from "sonner";
 
 export function Users() {
+  const queryClient = useQueryClient()
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const {
     data: result,
     isLoading: isUsersLoading
@@ -14,9 +21,39 @@ export function Users() {
     queryKey: ['users']
   })
 
+    const pageIndex = z.coerce
+    .number()
+    .transform((page) => page - 1)
+    .parse(searchParams.get('page') ?? '1')
+
+  const {
+    mutateAsync: deleteUserFn,
+    isPending: isDeleteUser
+  } = useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users', pageIndex] })
+    },
+  })
+
+  async function handleDeleteUser(userId: string) {
+    try {
+      await deleteUserFn(userId);
+      toast.success("O usuário foi deletado com sucesso!", { position: "top-center" });
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        toast.error("Você não tem permissão para deletar este usuário!", { position: "top-center" });
+      } else if (error.response?.status === 404) {
+        toast.error("Usuário não encontrado!", { position: "top-center" });
+      } else {
+        toast.error("Não foi possível deletar este usuário!", { position: "top-center" });
+      }
+    }
+  }
+
   return (
     <div className="flex flex-1">
-      <div className="flex flex-1 flex-col gap-4 p-4">
+      <div className="flex flex-1 flex-col gap-4 p-2">
         <h1 className="text-3xl font-bold tracking-tighter">
           Gerenciamento de Usuário
         </h1>
@@ -43,6 +80,8 @@ export function Users() {
                     <UsersTableRow
                       key={user.id}
                       data={user}
+                      onDeleteUser={handleDeleteUser}
+                      isDeleteUserLoading={isDeleteUser}
                     />
                   )
                 })}

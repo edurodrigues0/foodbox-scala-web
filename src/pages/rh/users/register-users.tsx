@@ -61,7 +61,9 @@ export function RegisterUsers() {
       reset()
       setSelectedUnit(undefined)
       setRole(undefined)
-      toast.success(`Usuário cadastrado com sucesso!`)
+      toast.success('Usuário cadastrado com sucesso!', {
+        position: 'top-center',
+      })
     } catch {
       toast.error("Não foi possível cadastrar o usuário.", {
         position: 'top-center',

@@ -11,10 +11,16 @@ interface User {
 
 interface UsersTableRowProps {
   data: User
+  onDeleteUser: (userId: string) => void
+  isDeleteUserLoading: boolean
 }
 
-export function UsersTableRow({ data }: UsersTableRowProps) {
-  return(
+export function UsersTableRow({
+  data,
+  onDeleteUser,
+  isDeleteUserLoading,
+}: UsersTableRowProps) {
+  return (
     <TableRow>
       <TableCell>
         { data.user_name }
@@ -29,7 +35,11 @@ export function UsersTableRow({ data }: UsersTableRowProps) {
       </TableCell>
 
       <TableCell>
-        <button className="h-4 w-4 text-primary">
+        <button
+          className="h-4 w-4 text-primary"
+          onClick={() => onDeleteUser(data.id)}
+          disabled={isDeleteUserLoading}
+        >
           <X />
         </button>
       </TableCell>
