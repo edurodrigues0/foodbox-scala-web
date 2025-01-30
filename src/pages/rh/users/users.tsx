@@ -51,6 +51,14 @@ export function Users() {
     }
   }
 
+  function handlePaginate(pageIndex: number) {
+    setSearchParams((prevState) => {
+      prevState.set('page', (pageIndex + 1).toString())
+
+      return prevState
+    })
+  }
+
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-2">
@@ -88,12 +96,14 @@ export function Users() {
               </TableBody>
             </Table>
 
-            <Pagination
-              onPageChange={() => {}}
-              pageIndex={0}
-              perPage={10}
-              totalCount={30}
-            />
+            {result && (
+              <Pagination
+                onPageChange={handlePaginate}
+                pageIndex={result.meta.page_index}
+                perPage={result.meta.per_page}
+                totalCount={result.meta.total_count}
+              />
+            )}
           </div>
         </div>
       </div>
