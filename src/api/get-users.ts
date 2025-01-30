@@ -2,9 +2,10 @@ import { api } from "@/lib/axios";
 
 interface User {
   id: string
-  name: string
-  unit: string
-  sector: string
+  user_name: string
+  unit_name: string
+  sector_name: string
+  role: string
 }
 
 export interface GetUsersResponse {

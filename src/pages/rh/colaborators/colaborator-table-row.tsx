@@ -1,6 +1,7 @@
 import { DeleteMenuParams } from "@/api/delete-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Edit2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Colaborator {
   colaborator_id: string
@@ -37,9 +38,9 @@ export function ColaboratorsTableRow({
       </TableCell>
 
       <TableCell>
-        <button className="p-1 rounded-md hover:text-gray-500 transition-colors">
+        <Link to={`/colaboradores/${data.colaborator_id}/editar`} className="p-1 rounded-md hover:text-gray-500 transition-colors">
           <Edit2 className="w-4 h-4" />
-        </button>
+        </Link>
       </TableCell>
     </TableRow>
   )

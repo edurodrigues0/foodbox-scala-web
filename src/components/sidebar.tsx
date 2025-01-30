@@ -36,6 +36,10 @@ const linksByRole: LinksByRole = {
     { to: "/rh/dashboard/restaurantes", title: "Restaurantes", icon: Utensils },
     { to: "/rh/dashboard/pedidos", title: "Pedidos", icon: UtensilsCrossed },
   ],
+  supervisor: [
+    { to: "/colaboradores", title: "Colaboradores", icon: Users2 },
+    { to: "/pedidos", title: "Pedidos", icon: UtensilsCrossed },
+  ]
 }
 
 interface SiderbarProps {

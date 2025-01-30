@@ -7,6 +7,18 @@ export function RegisterUnitForm() {
     <form className="space-y-4 w-96">
       <div className="space-y-4">
         <Label>
+          Código
+        </Label>
+        <Input
+          id="code"
+          type="number"
+          min={1}
+          max={99}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <Label>
           Nome da Unidade
         </Label>
         <Input

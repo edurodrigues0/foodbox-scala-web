@@ -1,8 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
 import { RegisterUnitForm } from "./register-unit-form";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Edit2 } from "lucide-react";
+import { Table, TableBody, TableHead, TableHeader } from "@/components/ui/table"
+import { getUnits } from "@/api/get-units";
+import { UnitsTableRow } from "./units-table-row";
 
 export function Units() {
+  const { data: result, isLoading: isUnitLoading } = useQuery({
+    queryFn: getUnits,
+    queryKey: ['units']
+  })
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-4">
@@ -27,76 +33,14 @@ export function Units() {
             </TableHeader>
 
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  1
-                </TableCell>
-
-                <TableCell>
-                  Scala I
-                </TableCell>
-
-                <TableCell>
-                  <Edit2 />
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>
-                  2
-                </TableCell>
-
-                <TableCell>
-                  Scala II
-                </TableCell>
-
-                <TableCell>
-                  <Edit2 />
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>
-                  3
-                </TableCell>
-
-                <TableCell>
-                  Scala III
-                </TableCell>
-
-                <TableCell>
-                  <Edit2 />
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>
-                  4
-                </TableCell>
-
-                <TableCell>
-                  Scala IV
-                </TableCell>
-
-                <TableCell>
-                  <Edit2 />
-                </TableCell>
-              </TableRow>
-
-
-              <TableRow>
-                <TableCell>
-                  99
-                </TableCell>
-
-                <TableCell>
-                  SCL
-                </TableCell>
-
-                <TableCell>
-                  <Edit2 />
-                </TableCell>
-              </TableRow>
+              { result && result.units_and_restaurants.map((unit) => {
+                return (
+                  <UnitsTableRow
+                    key={unit.unit_id}
+                    data={unit}
+                  />
+                )
+              })}
             </TableBody>
           </Table>
         </div>

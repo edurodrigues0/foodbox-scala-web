@@ -9,7 +9,7 @@ import { Menu } from '@/pages/app/menu/menu';
 import { Orders } from '@/pages/app/orders/orders';
 import { RhDashboard } from '@/pages/rh/rh-dashboard';
 import { Colaborators } from '@/pages/rh/colaborators/colaborators';
-import { RegisterColaborator } from '@/pages/rh/register/register-colaborator';
+import { RegisterColaborator } from '@/pages/rh/colaborators/register/register-colaborator';
 import { Units } from '@/pages/rh/units/units';
 import { Sectors } from '@/pages/rh/sectors/sectors';
 import { Restaurants } from '@/pages/rh/restaurants/restaurants';
@@ -17,6 +17,7 @@ import { Orders as AdminOrders } from '@/pages/rh/orders/orders'
 import { Users } from '@/pages/rh/users/users';
 import { Unauthorized } from '@/pages/unauthorized';
 import { PublicRoute } from './public-routes';
+import { UpdateColaborator } from '@/pages/rh/colaborators/update/update-colaborator';
 
 export function AppRoutes() {
   return (
@@ -42,6 +43,7 @@ export function AppRoutes() {
             <Route path='/rh/dashboard' element={ <RhDashboard /> } />
             <Route path='/rh/dashboard/colaboradores' element={ <Colaborators /> } />
             <Route path='/rh/dashboard/colaboradores/cadastro' element={ <RegisterColaborator /> } />
+            <Route path='/colaboradores/:colaboratorId/editar' element={ <UpdateColaborator /> } />
             <Route path='/rh/dashboard/usuarios' element={ <Users /> } />
             <Route path='/rh/dashboard/unidades' element={ <Units /> } />
             <Route path='/rh/dashboard/setores' element={ <Sectors /> } />
