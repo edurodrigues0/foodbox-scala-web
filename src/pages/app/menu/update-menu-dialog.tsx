@@ -41,7 +41,7 @@ export function UpdateMenuDialog({ open, menuId }: UpdateMenuDialogProps) {
   const { data: result } = useQuery({
     queryKey: ["menu", menuId],
     queryFn: async () => await getMenu({ menuId }),
-    enabled: open && !!menuId, // Garante que o menuId seja válido
+    enabled: open && !!menuId,
   })
 
   const {
