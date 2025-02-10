@@ -10,7 +10,7 @@ export interface GetSectorsResponse {
 }
 
 export async function getSectors(unitId: string): Promise<GetSectorsResponse> {
-  const response = await api.get(`/sectors/${unitId}`)
+  const response = await api.get(`/sectors/${unitId}/unit`)
 
   return response.data
 }

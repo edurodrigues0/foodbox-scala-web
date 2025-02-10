@@ -38,13 +38,13 @@ export function DashboardLayout() {
   }, [navigate])
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="max-w-screen w-full h-screen flex flex-col">
       <Header />
 
       <div className="flex flex-1">
         <Sidebar role={user?.role} />
 
-        <Separator className="bg-primary" orientation="vertical" />
+        <Separator className="bg-primary col-span-1" orientation="vertical" />
 
         <Outlet />
       </div>
