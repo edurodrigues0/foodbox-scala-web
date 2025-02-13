@@ -1,8 +1,31 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Edit2 } from "lucide-react";
+import { Table, TableBody, TableHead, TableHeader } from "@/components/ui/table";
 import { RestaurantsForm } from "./restaurants-form";
+import { RestaurantsTableRow } from "./restaurants-table-row";
+import { useSearchParams } from "react-router-dom";
+import { z } from "zod";
+import { useQuery } from "@tanstack/react-query";
+import { getRestaurants } from "@/api/get-restaurants";
 
 export function Restaurants() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const pageIndex = z.coerce
+  .number()
+  .transform((page) => page - 1)
+  .parse(searchParams.get('page') ?? '1')
+
+  const {
+    data: result,
+    isLoading: isRestaurantsLoading
+  } = useQuery({
+    queryFn: () => getRestaurants({
+      pageIndex,
+    }),
+    queryKey: ['restaurants', pageIndex],
+  })
+
+  console.log(result)
+
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-4">
@@ -20,82 +43,21 @@ export function Restaurants() {
             
             <Table>
               <TableHeader>
-                <TableHead>Unidade</TableHead>
+                <TableHead>Unidade(s)</TableHead>
                 <TableHead>Nome</TableHead>
+                <TableHead>Gerente</TableHead>
                 <TableHead></TableHead>
               </TableHeader>
 
               <TableBody>
-                <TableRow>
-                  <TableCell>
-                    Scala I
-                  </TableCell>
-
-                  <TableCell>
-                    Recanto da Praça
-                  </TableCell>
-
-                  <TableCell>
-                    <Edit2 />
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell>
-                    Scala II
-                  </TableCell>
-
-                  <TableCell>
-                    Recanto da Praça
-                  </TableCell>
-
-                  <TableCell>
-                    <Edit2 />
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell>
-                    Scala III
-                  </TableCell>
-
-                  <TableCell>
-                    Raízes Gastrobar
-                  </TableCell>
-
-                  <TableCell>
-                    <Edit2 />
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell>
-                    Scala IV
-                  </TableCell>
-
-                  <TableCell>
-                    Kavera's Restaurante
-                  </TableCell>
-
-                  <TableCell>
-                    <Edit2 />
-                  </TableCell>
-                </TableRow>
-
-
-                <TableRow>
-                  <TableCell>
-                    SCL
-                  </TableCell>
-
-                  <TableCell>
-                    Restaurante Armazém
-                  </TableCell>
-
-                  <TableCell>
-                    <Edit2 />
-                  </TableCell>
-                </TableRow>
+                { result && result.restaurants.map((restaurant) => {
+                  return (
+                    <RestaurantsTableRow
+                      key={restaurant.id}
+                      data={restaurant}
+                    />
+                  )
+                })}
               </TableBody>
             </Table>
           </div>

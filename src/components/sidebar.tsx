@@ -50,7 +50,7 @@ export function Sidebar({ role }: SiderbarProps) {
   const links = linksByRole[role] || []
 
   return (
-    <nav className="h-full w-52 flex flex-col justify-start p-6 space-y-8">
+    <nav className="h-full w-44 flex flex-col justify-start p-6 space-y-8">
       {links.map((link) => {
         return (
           <NavLink

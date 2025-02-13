@@ -8,7 +8,7 @@ export interface RegisterUserBody {
   role: UserRoleEnum,
   restaurantName: string | undefined
   sectorId: string | undefined
-  unitId: string | undefined
+  unitId: string | string[] | undefined
 }
 
 export interface RegisterUserResponse {
@@ -20,6 +20,7 @@ export async function registerUser({
   name,
   restaurantName,
   role,
+  unitId,
   sectorId,
 }: RegisterUserBody): Promise<RegisterUserResponse> {
   const response = await api.post('/users', {
@@ -27,6 +28,7 @@ export async function registerUser({
     name,
     restaurantName,
     role,
+    unitId,
     sectorId,
   })
 

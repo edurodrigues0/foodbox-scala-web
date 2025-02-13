@@ -9,6 +9,7 @@ export function Units() {
     queryFn: getUnits,
     queryKey: ['units']
   })
+  
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-4">

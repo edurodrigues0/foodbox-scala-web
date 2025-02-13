@@ -14,7 +14,6 @@ import { z } from "zod";
 const registerUserSchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  restaurantName: z.string().optional(),
   sectorId: z.string().optional(),
 })
 
@@ -48,19 +47,19 @@ export function RegisterUsers() {
   })
 
   async function handleRegisterUser(data: RegisterUserSchema) {
+    console.log(data, 'unitId:', selectedUnit)
+
     try {
       await registerUserFn({
         email: data.email,
         name: data.name,
         role: role as unknown as UserRoleEnum ?? undefined,
-        restaurantName: data.restaurantName,
+        restaurantName: undefined,
         sectorId: data.sectorId,
         unitId: selectedUnit,
       })
 
       reset()
-      setSelectedUnit(undefined)
-      setRole(undefined)
       toast.success('Usuário cadastrado com sucesso!', {
         position: 'top-center',
       })
@@ -113,21 +112,8 @@ export function RegisterUsers() {
             <SelectContent>
               <SelectItem value='rh'>RH</SelectItem>
               <SelectItem value='supervisor'>Supervisor</SelectItem>
-              <SelectItem value='restaurant'>Restaurante</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-
-        <div className="flex flex-1 flex-col space-y-2">
-          <Label htmlFor="restaurantName">
-            Nome do Restaurante
-          </Label>
-
-          <Input
-            id="restaurantName"
-            disabled={ role !== "restaurant" as unknown as UserRoleEnum.restaurant }
-            {...register("restaurantName")}
-          />
         </div>
       </div>
 
@@ -172,7 +158,11 @@ export function RegisterUsers() {
                 name={name}
                 onValueChange={onChange}
                 value={value}
-                disabled={disabled || isSectorsLoading || !sectorResult}
+                disabled={
+                  disabled ||
+                  isSectorsLoading ||
+                  !sectorResult
+                }
               >
                 <SelectTrigger className="w-full">
                   <SelectValue />
