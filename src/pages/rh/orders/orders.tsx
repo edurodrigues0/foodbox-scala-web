@@ -6,9 +6,38 @@ import { useAuth } from "@/context/auth-context"
 import { OrdersTotalTableRow } from "./orders-total-table-row"
 import { OrdersTotalTableFilters } from "./orders-total-table-filters"
 import { Button } from "@/components/ui/button"
+import { useSearchParams } from "react-router-dom"
+import { z } from "zod"
+import { useQuery } from "@tanstack/react-query"
+import { getAllOrders } from "@/api/get-all-orders"
 
 export function Orders() {
   const { user } = useAuth()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const pageIndex = z.coerce
+  .number()
+  .transform((page) => page - 1)
+  .parse(searchParams.get('page') ?? '1')
+
+  const {
+    data: result,
+    isLoading: isOrdersLoading,
+  } = useQuery({
+    queryFn: () => getAllOrders({
+      pageIndex,
+    }),
+    queryKey: ['orders', pageIndex],
+  })
+
+  function handlePaginate(pageIndex: number) {
+    setSearchParams((prevState) => {
+      prevState.set('page', (pageIndex + 1).toString())
+
+      return prevState
+    })
+  }
+
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-4">
@@ -56,13 +85,16 @@ export function Orders() {
                 <TableHead>Matricula</TableHead>
                 <TableHead>Nome</TableHead>
                 <TableHead>CPF</TableHead>
+                <TableHead>Quantidade</TableHead>
                 <TableHead>Total</TableHead>
               </TableHeader>
 
               <TableBody>
-                <OrdersTotalTableRow />
-                <OrdersTotalTableRow />
-                <OrdersTotalTableRow />
+                { result && result.orders.map((order) => {
+                  return (
+                    <OrdersTotalTableRow data={order} />
+                  )
+                })}
               </TableBody>
             </Table>
 
@@ -71,12 +103,14 @@ export function Orders() {
                 Baixar
               </Button>
 
-              <Pagination
-                pageIndex={0}
-                perPage={10}
-                totalCount={10}
-                onPageChange={() => {}}
-              />
+              { result && (
+                <Pagination
+                  pageIndex={result.meta.page_index}
+                  perPage={result.meta.per_page}
+                  totalCount={result.meta.total_count}
+                  onPageChange={handlePaginate}
+                />
+              )}
             </div>
           </div>
         )}

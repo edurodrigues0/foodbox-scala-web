@@ -1,22 +1,43 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 
-export function OrdersTotalTableRow() {
+interface OrdersTotalTableRowProps {
+  data: {
+    registration: number
+    colaborator: string
+    cpf: string
+    total_spent_in_cents: number
+    total_orders: number
+  }
+}
+
+export function OrdersTotalTableRow({
+  data,
+}: OrdersTotalTableRowProps) {
   return (
     <TableRow>
       <TableCell>
-        1166
+        { data.registration }
       </TableCell>
 
       <TableCell>
-        Eduardo Henrique de S Rodrigues
+        { data.colaborator }
       </TableCell>
 
       <TableCell>
-        086.363.796-52
+        { data.cpf }
       </TableCell>
 
       <TableCell>
-        R$ 56,00
+        { data.total_orders }
+      </TableCell>
+
+      <TableCell>
+        {
+          new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(data.total_spent_in_cents / 100)
+        }
       </TableCell>
     </TableRow>
   )
