@@ -1,55 +1,15 @@
+import { useQuery } from "@tanstack/react-query"
 import { OrdersCard } from "./orders-card"
-
-const units = [
-  {
-    name: "Unidade II",
-    sectors: [
-      {
-        name: "Higienização",
-        lunchboxesOfMorningAmount: 10,
-        lunchboxesOfAfternoonAmount: 8,
-        lunchboxesOfNightAmount: 4
-      },
-      {
-        name:"Embalagem Secundária",
-        lunchboxesOfMorningAmount: 8,
-        lunchboxesOfAfternoonAmount: 3,
-        lunchboxesOfNightAmount: 5
-      },
-      {
-        name: "Maturação de Parmesão",
-        lunchboxesOfMorningAmount: 34,
-      },
-      {
-        name: "Maturação de Colonial",
-        lunchboxesOfMorningAmount: 22,
-      },
-    ],
-  },
-  {
-    name: "SCL",
-    sectors: [
-      {
-        name: "Produção",
-        lunchboxesOfMorningAmount: 40,
-        lunchboxesOfAfternoonAmount: 35,
-        lunchboxesOfNightAmount: 25
-      },
-      { name: "Administrativo",
-        lunchboxesOfMorningAmount: 15,
-        lunchboxesOfAfternoonAmount: 10,
-        lunchboxesOfNightAmount: 3
-      },
-      { name: "Logística",
-        lunchboxesOfMorningAmount: 25,
-        lunchboxesOfAfternoonAmount: 20,
-        lunchboxesOfNightAmount: 15
-      },
-    ],
-  },
-]
+import { getCurrentOrders } from "@/api/get-current-orders"
 
 export function Orders() {
+  const { data: result } = useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => await getCurrentOrders('q4fyml1kqkl8jrdjnqpul3oy'),
+    refetchInterval: 1000 * 60 * 1, // 1 minutes
+    staleTime: 1000 * 60 * 1, // 1 minutes
+  })
+
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col gap-4 p-4">
@@ -58,11 +18,19 @@ export function Orders() {
         </h1>
 
         <div className="grid grid-cols-2 gap-4">
-          { units.map((unit) => {
+          { result && result.current_orders.map((item) => {
             return (
-              <OrdersCard key={unit.name} unit={unit} />
+              <OrdersCard key={item.unit} currentOrders={item} />
             )
           })}
+        </div>
+
+        <div className="mt-10">
+          <ul className="text-sm text-secondary-foreground flex flex-col gap-4 ml-5">
+            <li>Pedidos da manhã serão encerrados às 8h</li>
+            <li>Pedidos da tarde serão encerrados às 14h</li>
+            <li>Pedidos da tarde serão encerrados às 00h</li>
+          </ul>
         </div>
       </div>
     </div>

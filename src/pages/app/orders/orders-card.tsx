@@ -1,87 +1,42 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-interface Unit {
-  name: string;
-  sectors: {
-    name: string;
-    lunchboxesOfMorningAmount?: number;
-    lunchboxesOfAfternoonAmount?: number;
-    lunchboxesOfNightAmount?: number;
-  }[];
+interface CurrentOrders {
+  unit: string
+  orders: {
+    sector: string
+    total_orders: number
+  }[]
 }
 
 export interface OrdersCardProps {
-  unit: Unit;
+  currentOrders: CurrentOrders;
 }
 
-export function OrdersCard({ unit }: OrdersCardProps) {
-  const totalPerTurn = unit.sectors.reduce(
-    (acc, sector) => ({
-      morningAmount: acc.morningAmount + (sector.lunchboxesOfMorningAmount ?? 0),
-      afternoonAmount: acc.afternoonAmount + (sector.lunchboxesOfAfternoonAmount ?? 0),
-      nightAmount: acc.nightAmount + (sector.lunchboxesOfNightAmount ?? 0),
-    }),
-    { morningAmount: 0, afternoonAmount: 0, nightAmount: 0 }
-  );
-
-  const total =
-    totalPerTurn.morningAmount +
-    totalPerTurn.afternoonAmount +
-    totalPerTurn.nightAmount;
-
+export function OrdersCard({ currentOrders }: OrdersCardProps) {
   return (
     <Card>
-      <CardHeader>{unit.name}</CardHeader>
+      <CardHeader>{currentOrders.unit}</CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Setor</TableHead>
-              <TableHead className="text-right">Manhã</TableHead>
-              <TableHead className="text-right">Tarde</TableHead>
-              <TableHead className="text-right">Noite</TableHead>
-              <TableHead className="text-right">Total</TableHead>
+              <TableHead className="text-right">Qtd.</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            {unit.sectors.map((sector) => {
-              const sectorTotal =
-                (sector.lunchboxesOfMorningAmount ?? 0) +
-                (sector.lunchboxesOfAfternoonAmount ?? 0) +
-                (sector.lunchboxesOfNightAmount ?? 0);
-
+            {currentOrders.orders.map((order) => {
               return (
-                <TableRow key={sector.name}>
-                  <TableCell>{sector.name}</TableCell>
+                <TableRow key={`${order.sector} + ${order.total_orders}`}>
+                  <TableCell>{order.sector.toLocaleUpperCase()}</TableCell>
                   <TableCell className="text-right">
-                    {sector.lunchboxesOfMorningAmount ?? 0}
+                    {order.total_orders}
                   </TableCell>
-                  <TableCell className="text-right">
-                    {sector.lunchboxesOfAfternoonAmount ?? 0}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {sector.lunchboxesOfNightAmount ?? 0}
-                  </TableCell>
-                  <TableCell className="text-right">{sectorTotal}</TableCell>
                 </TableRow>
               );
             })}
-
-            <TableRow className="font-bold">
-              <TableCell>Total</TableCell>
-              <TableCell className="text-right">
-                {totalPerTurn.morningAmount}
-              </TableCell>
-              <TableCell className="text-right">
-                {totalPerTurn.afternoonAmount}
-              </TableCell>
-              <TableCell className="text-right">
-                {totalPerTurn.nightAmount}
-              </TableCell>
-              <TableCell className="text-right">{total}</TableCell>
-            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
