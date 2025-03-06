@@ -14,7 +14,7 @@ import { useState } from "react";
 import { getUnits } from "@/api/get-units";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getMenusTodayAndTomorrow } from "@/api/get-menus-today-and-tomorrow";
-import { MenuDescription } from "@/pages/app/menu/menu-description";
+import { MenuDescription } from "@/pages/restaurant/menu/menu-description";
 import { UtensilsCrossed, X } from "lucide-react";
 import InputMask from "react-input-mask"
 

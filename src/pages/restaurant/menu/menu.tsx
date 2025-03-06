@@ -1,4 +1,4 @@
-import { MenuDialog } from "@/pages/app/menu/menu-dialog";
+import { MenuDialog } from "@/pages/restaurant/menu/menu-dialog";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
