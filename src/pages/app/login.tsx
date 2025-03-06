@@ -54,11 +54,11 @@ export function Login() {
       }
 
       if (user.role === 'restaurant') {
-        navigate('/restaurante/dashboard', {
+        navigate('/restaurante/cardapio', {
           replace: true,
         })
       } else if (user.role === 'rh') {
-        navigate('/rh/dashboard', {
+        navigate('/admin/colaboradores', {
           replace: true,
         }) 
       }

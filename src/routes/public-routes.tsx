@@ -4,14 +4,14 @@ import { Navigate, Outlet } from 'react-router-dom'
 export function PublicRoute() {
   const { user } = useAuth()
 
-  let redirectTo = '/rh/dashboard'
+  let redirectTo = '/admin/colaboradores'
 
   if (user && user.role === 'rh') {
-    redirectTo = '/rh/dashboard'
+    redirectTo = '/admin/colaboradores'
   }
 
   if (user && user.role === 'restaurant') {
-    redirectTo = '/restaurante/dashboard'
+    redirectTo = '/restaurante/cardapio'
   }
 
   if (user) {

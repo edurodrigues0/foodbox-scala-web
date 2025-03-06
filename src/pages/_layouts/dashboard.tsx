@@ -42,7 +42,7 @@ export function DashboardLayout() {
       <Header />
 
       <div className="flex flex-1">
-        <Sidebar role={user?.role} />
+        <Sidebar role={user!.role} />
 
         <Separator className="bg-primary col-span-1" orientation="vertical" />
 

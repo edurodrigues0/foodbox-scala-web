@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { OrdersCard } from "./orders-card"
 import { getCurrentOrders } from "@/api/get-current-orders"
+import { OrdersCardSkeleton } from "./orders-card-skeleton"
 
 export function Orders() {
-  const { data: result } = useQuery({
+  const { data: result, isLoading: isLoadingOrders } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => await getCurrentOrders('q4fyml1kqkl8jrdjnqpul3oy'),
     refetchInterval: 1000 * 60 * 1, // 1 minutes
@@ -18,6 +19,12 @@ export function Orders() {
         </h1>
 
         <div className="grid grid-cols-2 gap-4">
+          { isLoadingOrders && (
+            <>
+              <OrdersCardSkeleton />
+              <OrdersCardSkeleton />
+            </>
+          )}
           { result && result.current_orders.map((item) => {
             return (
               <OrdersCard key={item.unit} currentOrders={item} />

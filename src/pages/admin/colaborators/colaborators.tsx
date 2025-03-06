@@ -56,7 +56,7 @@ export function Colaborators() {
           <div className="flex flex-col p-4">
             <div className="flex flex-1 justify-between">
               <Button
-                onClick={() => navigate('/rh/dashboard/colaboradores/cadastro')}
+                onClick={() => navigate('/admin/colaboradores/cadastro')}
                 variant="link"
                 className="font-semibold w-fit"
               >

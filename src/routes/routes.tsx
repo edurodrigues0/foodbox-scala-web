@@ -7,17 +7,17 @@ import { DashboardLayout } from '@/pages/_layouts/dashboard';
 import { Dashboard } from '@/pages/app/dashboard';
 import { Menu } from '@/pages/app/menu/menu';
 import { Orders } from '@/pages/app/orders/orders';
-import { RhDashboard } from '@/pages/rh/rh-dashboard';
-import { Colaborators } from '@/pages/rh/colaborators/colaborators';
-import { RegisterColaborator } from '@/pages/rh/colaborators/register/register-colaborator';
-import { Units } from '@/pages/rh/units/units';
-import { Sectors } from '@/pages/rh/sectors/sectors';
-import { Restaurants } from '@/pages/rh/restaurants/restaurants';
-import { Orders as AdminOrders } from '@/pages/rh/orders/orders'
-import { Users } from '@/pages/rh/users/users';
+import { RhDashboard } from '@/pages/admin/rh-dashboard';
+import { Colaborators } from '@/pages/admin/colaborators/colaborators';
+import { RegisterColaborator } from '@/pages/admin/colaborators/register/register-colaborator';
+import { Units } from '@/pages/admin/units/units';
+import { Sectors } from '@/pages/admin/sectors/sectors';
+import { Restaurants } from '@/pages/admin/restaurants/restaurants';
+import { Orders as AdminOrders } from '@/pages/admin/orders/orders'
+import { Users } from '@/pages/admin/users/users';
 import { Unauthorized } from '@/pages/unauthorized';
 import { PublicRoute } from './public-routes';
-import { UpdateColaborator } from '@/pages/rh/colaborators/update/update-colaborator';
+import { UpdateColaborator } from '@/pages/admin/colaborators/update/update-colaborator';
 
 export function AppRoutes() {
   return (
@@ -33,22 +33,22 @@ export function AppRoutes() {
         <Route element={ <ProtectedRoute requiredRoles={['restaurant']} /> }>
           <Route element={ <DashboardLayout /> }>
             <Route path='/restaurante/dashboard' element={ <Dashboard /> } />
-            <Route path='/restaurante/dashboard/pedidos' element={ <Orders /> } />
-            <Route path='/restaurante/dashboard/cardapio' element={ <Menu /> } />
+            <Route path='/restaurante/pedidos' element={ <Orders /> } />
+            <Route path='/restaurante/cardapio' element={ <Menu /> } />
           </Route>
         </Route>
 
         <Route element={ <ProtectedRoute requiredRoles={['rh', 'supervisor']} /> }>
           <Route element={ <DashboardLayout /> }>
-            <Route path='/rh/dashboard' element={ <RhDashboard /> } />
-            <Route path='/rh/dashboard/colaboradores' element={ <Colaborators /> } />
-            <Route path='/rh/dashboard/colaboradores/cadastro' element={ <RegisterColaborator /> } />
+            {/* <Route path='/admin/dashboard' element={ <RhDashboard /> } /> */}
+            <Route path='/admin/colaboradores' element={ <Colaborators /> } />
+            <Route path='/admin/colaboradores/cadastro' element={ <RegisterColaborator /> } />
             <Route path='/colaboradores/:colaboratorId/editar' element={ <UpdateColaborator /> } />
-            <Route path='/rh/dashboard/usuarios' element={ <Users /> } />
-            <Route path='/rh/dashboard/unidades' element={ <Units /> } />
-            <Route path='/rh/dashboard/setores' element={ <Sectors /> } />
-            <Route path='/rh/dashboard/restaurantes' element={ <Restaurants /> } />
-            <Route path='/rh/dashboard/pedidos' element={ <AdminOrders /> } />
+            <Route path='/admin/usuarios' element={ <Users /> } />
+            <Route path='/admin/unidades' element={ <Units /> } />
+            <Route path='/admin/setores' element={ <Sectors /> } />
+            <Route path='/admin/restaurantes' element={ <Restaurants /> } />
+            <Route path='/admin/pedidos' element={ <AdminOrders /> } />
           </Route>
         </Route>
 

@@ -66,7 +66,7 @@ export function RegisterColaboratorForm() {
           className: 'flex flex-col items-center justify-center gap-4',
           action: {
             label: "Voltar para lista de colaboradores",
-            onClick: () => navigate("/rh/dashboard/colaboradores"),
+            onClick: () => navigate("/admin/colaboradores"),
         },
       });
     } catch (error) {

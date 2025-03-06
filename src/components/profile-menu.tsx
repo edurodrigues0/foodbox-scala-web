@@ -52,7 +52,10 @@ export function ProfileMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Building className="w-4 h-4 mr-2" />
-          <span>Perfil</span>
+          <span>
+            Perfil
+            <span className="text-xs text-gray-400 ml-1">(em desenvolvimento)</span>
+          </span>
         </DropdownMenuItem>
 
         <DropdownMenuItem

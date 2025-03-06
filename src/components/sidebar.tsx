@@ -23,18 +23,18 @@ interface LinksByRole {
 
 const linksByRole: LinksByRole = {
   restaurant: [
-    { to: "/restaurante/dashboard", title: "Início", icon: Home },
-    { to: "/restaurante/dashboard/pedidos", title: "Pedidos", icon: Utensils },
-    { to: "/restaurante/dashboard/cardapio", title: "Cardápio", icon: SquareMenu },
+    // { to: "/restaurante/dashboard", title: "Início", icon: Home },
+    { to: "/restaurante/cardapio", title: "Cardápio", icon: SquareMenu },
+    { to: "/restaurante/pedidos", title: "Pedidos", icon: Utensils },
   ],
   rh: [
-    { to: "/rh/dashboard", title: "Início", icon: Home },
-    { to: "/rh/dashboard/colaboradores", title: "Colaboradores", icon: Users2 },
-    { to: "/rh/dashboard/usuarios", title: "Usuários", icon: ClipboardList },
-    { to: "/rh/dashboard/unidades", title: "Unidades", icon: Building2 },
-    { to: "/rh/dashboard/setores", title: "Setores", icon: LayoutDashboard },
-    { to: "/rh/dashboard/restaurantes", title: "Restaurantes", icon: Utensils },
-    { to: "/rh/dashboard/pedidos", title: "Pedidos", icon: UtensilsCrossed },
+    // { to: "/rh/dashboard", title: "Início", icon: Home },
+    { to: "/admin/colaboradores", title: "Colaboradores", icon: Users2 },
+    { to: "/admin/usuarios", title: "Usuários", icon: ClipboardList },
+    { to: "/admin/unidades", title: "Unidades", icon: Building2 },
+    { to: "/admin/setores", title: "Setores", icon: LayoutDashboard },
+    { to: "/admin/restaurantes", title: "Restaurantes", icon: Utensils },
+    { to: "/admin/pedidos", title: "Pedidos", icon: UtensilsCrossed },
   ],
   supervisor: [
     { to: "/colaboradores", title: "Colaboradores", icon: Users2 },
