@@ -2,11 +2,24 @@ import { useQuery } from "@tanstack/react-query"
 import { OrdersCard } from "./orders-card"
 import { getCurrentOrders } from "@/api/get-current-orders"
 import { OrdersCardSkeleton } from "./orders-card-skeleton"
+import { getProfile } from "@/api/get-profile"
 
 export function Orders() {
+  const { data: profile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getProfile,
+  })
+
   const { data: result, isLoading: isLoadingOrders } = useQuery({
     queryKey: ["orders"],
-    queryFn: async () => await getCurrentOrders('q4fyml1kqkl8jrdjnqpul3oy'),
+    queryFn: async () => {
+      if (!profile?.user.restaurant_id) {
+        return null
+      }
+      
+      return await getCurrentOrders(profile.user.restaurant_id)
+    },
+    enabled: !!profile?.user.restaurant_id,
     refetchInterval: 1000 * 60 * 1, // 1 minutes
     staleTime: 1000 * 60 * 1, // 1 minutes
   })
@@ -25,6 +38,14 @@ export function Orders() {
               <OrdersCardSkeleton />
             </>
           )}
+          { result && result.current_orders.length === 0 && (
+            <div className="p-4">
+              <span className="text-secondary-foreground text-2xl">
+                Nenhum pedido no momento.
+              </span>
+            </div>
+          )}
+
           { result && result.current_orders.map((item) => {
             return (
               <OrdersCard key={item.unit} currentOrders={item} />

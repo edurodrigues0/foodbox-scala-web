@@ -5,6 +5,7 @@ export interface GetProfileResponse {
     id: string
     name: string
     email: string
+    restaurant_id: string | undefined
   }
 }
 

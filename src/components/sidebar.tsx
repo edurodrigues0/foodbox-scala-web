@@ -37,8 +37,8 @@ const linksByRole: LinksByRole = {
     { to: "/admin/pedidos", title: "Pedidos", icon: UtensilsCrossed },
   ],
   supervisor: [
-    { to: "/colaboradores", title: "Colaboradores", icon: Users2 },
-    { to: "/pedidos", title: "Pedidos", icon: UtensilsCrossed },
+    { to: "/supervisor/colaboradores", title: "Colaboradores", icon: Users2 },
+    { to: "/supervisor/pedidos", title: "Pedidos", icon: UtensilsCrossed },
   ]
 }
 

@@ -6,8 +6,12 @@ export function PublicRoute() {
 
   let redirectTo = '/admin/colaboradores'
 
-  if (user && user.role === 'rh') {
+  if (user && user.role === 'admin') {
     redirectTo = '/admin/colaboradores'
+  }
+
+  if (user && user.role === 'supervisor') {
+    redirectTo = '/supervisor/colaboradores'
   }
 
   if (user && user.role === 'restaurant') {

@@ -17,6 +17,7 @@ import { Users } from '@/pages/admin/users/users'
 import { Unauthorized } from '@/pages/unauthorized'
 import { PublicRoute } from './public-routes'
 import { UpdateColaborator } from '@/pages/admin/colaborators/update/update-colaborator'
+import { Colaborators as SupervisorColaborators } from '@/pages/supervisor/colaborators'
 
 export function AppRoutes() {
   return (
@@ -28,7 +29,8 @@ export function AppRoutes() {
             <Route path='/login' element={ <Login /> } />
           </Route>
         </Route>
-
+        
+        { /* Restaurant Routes */ }
         <Route element={ <ProtectedRoute requiredRoles={['restaurant']} /> }>
           <Route element={ <DashboardLayout /> }>
             <Route path='/restaurante/dashboard' element={ <Dashboard /> } />
@@ -37,6 +39,15 @@ export function AppRoutes() {
           </Route>
         </Route>
 
+        { /* Supervisor Route */ }
+        <Route element={ <ProtectedRoute requiredRoles={['supervisor']} /> }>
+          <Route element={ <DashboardLayout /> }>
+            <Route path='/supervisor/colaboradores' element={ <SupervisorColaborators /> } />
+            <Route path='/restaurante/pedidos' element={ <Orders /> } />
+          </Route>
+        </Route>
+
+        { /* Admin Routes */ }
         <Route element={ <ProtectedRoute requiredRoles={['rh', 'supervisor']} /> }>
           <Route element={ <DashboardLayout /> }>
             {/* <Route path='/admin/dashboard' element={ <RhDashboard /> } /> */}

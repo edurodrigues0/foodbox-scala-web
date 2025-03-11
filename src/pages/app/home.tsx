@@ -61,7 +61,8 @@ export function Home() {
     queryKey: ["menus", "today-and-tomorrow", selectedUnit],
     queryFn: () => getMenusTodayAndTomorrow(selectedUnit),
     enabled: !!selectedUnit,
-    staleTime: 1000 * 60 * 30, // 30min
+    staleTime: 1000 * 60 * 30, // 30 min
+    refetchInterval: 1000 * 60 * 60 * 1, // 1 hour
   });
 
   const { mutateAsync: createOrderFn } = useMutation({
