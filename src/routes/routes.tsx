@@ -18,6 +18,7 @@ import { Unauthorized } from '@/pages/unauthorized'
 import { PublicRoute } from './public-routes'
 import { UpdateColaborator } from '@/pages/admin/colaborators/update/update-colaborator'
 import { Colaborators as SupervisorColaborators } from '@/pages/supervisor/colaborators'
+import { Orders as SupervisorOrders } from '@/pages/supervisor/orders'
 
 export function AppRoutes() {
   return (
@@ -43,7 +44,7 @@ export function AppRoutes() {
         <Route element={ <ProtectedRoute requiredRoles={['supervisor']} /> }>
           <Route element={ <DashboardLayout /> }>
             <Route path='/supervisor/colaboradores' element={ <SupervisorColaborators /> } />
-            <Route path='/restaurante/pedidos' element={ <Orders /> } />
+            <Route path='/supervisor/pedidos' element={ <SupervisorOrders /> } />
           </Route>
         </Route>
 

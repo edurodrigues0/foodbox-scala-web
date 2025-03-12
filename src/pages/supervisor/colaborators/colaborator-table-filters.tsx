@@ -7,10 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 
 const colaboratorFiltersSchema = z.object({
-  colaboratorName: z.string().optional(),
-  registration: z.coerce.number().optional(),
-  unit: z.string().optional(),
-  sector: z.string().optional(),
+  colaboratorName: z.string().nullable().optional(),
+  registration: z.coerce.number().nullable().optional(),
 })
 
 type ColaboratorFilterSchema = z.infer<typeof colaboratorFiltersSchema>
@@ -19,39 +17,21 @@ export function ColaboratorTableFilter() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const colaboratorName = searchParams.get('nome')
-  const unit = searchParams.get('unidade')
-  const sector = searchParams.get('setor')
   const registration = searchParams.get('matricula')
 
   const { register, handleSubmit, reset } = useForm({
     resolver: zodResolver(colaboratorFiltersSchema),
     defaultValues: {
       colaboratorName: colaboratorName ?? "",
-      unit: unit ?? "",
-      sector: sector ?? "",
-      registration: registration ?? undefined
+      registration: registration ? Number(registration) : undefined
     }
   })
 
   function handleFilter({
-    unit,
-    sector,
     registration,
     colaboratorName,
   }: ColaboratorFilterSchema) {
     setSearchParams((prevState) => {
-      if(unit) {
-        prevState.set('unidade', unit)
-      } else {
-        prevState.delete('unidade')
-      }
-
-      if (sector) {
-        prevState.set('setor', sector)
-      } else {
-        prevState.delete('setor')
-      }
-
       if (registration) {
         prevState.set('matricula', registration.toString())
       } else {
@@ -72,8 +52,6 @@ export function ColaboratorTableFilter() {
   function handleClearFilters() {
     setSearchParams((prevState) => {
       prevState.delete('nome')
-      prevState.delete('setor')
-      prevState.delete('unidade')
       prevState.delete('matricula')
 
       prevState.set('page', '1')
@@ -82,10 +60,8 @@ export function ColaboratorTableFilter() {
     })
 
     reset({
-      unit: '',
       colaboratorName: '',
       registration: undefined,
-      sector: '',
     })
   }
 
@@ -107,18 +83,6 @@ export function ColaboratorTableFilter() {
         placeholder="Nome do colaborador"
         className="h-8 w-52"
         {...register('colaboratorName')}
-      />
-
-      <Input
-        placeholder="Unidade"
-        className="h-8 w-28"
-        {...register('unit')}
-      />
-
-      <Input
-        placeholder="Setor"
-        className="h-8 w-52"
-        {...register('sector')}
       />
 
       <Button type="submit" variant="secondary" size="sm">
