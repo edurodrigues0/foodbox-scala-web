@@ -9,7 +9,7 @@ interface Colaborator {
   unit_name: string
 } 
 
-export interface GetColaboratorsQuery {
+export interface GetCollaboratorsQuery {
   pageIndex?: number | null
   colaboratorName?: string | null
   unit?: string | null
@@ -17,19 +17,19 @@ export interface GetColaboratorsQuery {
   registration?: string | null
 }
 
-export interface GetColaboratorsResponse {
-  colaborators: Colaborator[]
+export interface GetCollaboratorsResponse {
+  collaborators: Colaborator[]
   meta: IPagination
 }
 
-export async function getColaborators({
+export async function getCollaborators({
   pageIndex,
   colaboratorName,
   unit,
   sector,
   registration
-}: GetColaboratorsQuery): Promise<GetColaboratorsResponse> {
-  const response = await api.get('/colaborators', {
+}: GetCollaboratorsQuery): Promise<GetCollaboratorsResponse> {
+  const response = await api.get('/collaborators', {
     params: {
       pageIndex,
       name: colaboratorName,

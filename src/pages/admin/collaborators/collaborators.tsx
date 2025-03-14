@@ -1,7 +1,7 @@
-import { getColaborators } from "@/api/get-colaborators"
+import { getCollaborators } from "@/api/get-collaborators"
 import { Pagination } from "@/components/pagination"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog } from "@/components/ui/dialog"
 import { TableHeader, TableHead, TableBody, Table } from "@/components/ui/table"
 import { MenuDialog } from "@/pages/restaurant/menu/menu-dialog"
 import { MenuTableSkeleton } from "@/pages/restaurant/menu/menu-table-skeleton"
@@ -9,10 +9,10 @@ import { useQuery } from "@tanstack/react-query"
 import { PlusCircle } from "lucide-react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { z } from "zod"
-import { ColaboratorsTableRow } from "./colaborator-table-row"
+import { CollaboratorsTableRow } from "./colaborator-table-row"
 import { ColaboratorTableFilter } from "./colaborator-table-filters"
 
-export function Colaborators() {
+export function Collaborators() {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
@@ -26,9 +26,9 @@ export function Colaborators() {
   const unit = searchParams.get('unidade')
   const sector = searchParams.get('setor')
 
-  const { data: result, isLoading: isLoadingColaborators } = useQuery({
-    queryKey: ['colaborators', pageIndex, colaboratorName, registration, unit, sector],
-    queryFn: () => getColaborators({
+  const { data: result, isLoading: isLoadingCollaborators } = useQuery({
+    queryKey: ['collaborators', pageIndex, colaboratorName, registration, unit, sector],
+    queryFn: () => getCollaborators({
       pageIndex,
       unit,
       sector,
@@ -78,10 +78,10 @@ export function Colaborators() {
             </TableHeader>
 
             <TableBody>
-              { isLoadingColaborators && <MenuTableSkeleton />}
-              { result && result.colaborators.map((colaborator) => {
+              { isLoadingCollaborators && <MenuTableSkeleton />}
+              { result && result.collaborators.map((colaborator) => {
                 return (
-                  <ColaboratorsTableRow
+                  <CollaboratorsTableRow
                     key={colaborator.colaborator_id}
                     data={colaborator}
                   />

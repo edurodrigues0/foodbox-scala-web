@@ -9,23 +9,23 @@ interface Colaborator {
   unit_name: string
 } 
 
-export interface GetColaboratorsQuery {
+export interface GetCollaboratorsQuery {
   pageIndex?: number | null
   colaboratorName?: string | null
   registration?: string | null
 }
 
-export interface GetColaboratorsResponse {
-  colaborators: Colaborator[]
+export interface GetCollaboratorsResponse {
+  collaborators: Colaborator[]
   meta: IPagination
 }
 
-export async function getColaboratorsBySector({
+export async function getCollaboratorsBySector({
   pageIndex,
   colaboratorName,
   registration
-}: GetColaboratorsQuery): Promise<GetColaboratorsResponse> {
-  const response = await api.get('/colaborators/sector', {
+}: GetCollaboratorsQuery): Promise<GetCollaboratorsResponse> {
+  const response = await api.get('/collaborators/sector', {
     params: {
       pageIndex,
       name: colaboratorName,

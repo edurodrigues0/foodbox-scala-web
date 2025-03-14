@@ -13,7 +13,7 @@ export async function createColaborator({
   cpf,
   sectorId
 }: CreateColaboratorBody): Promise<{colaborator_name: string}> {
-  const response = await api.post('/colaborators', {
+  const response = await api.post('/collaborators', {
     name,
     registration,
     cpf,

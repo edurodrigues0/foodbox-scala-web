@@ -14,7 +14,7 @@ export async function updateColaborator({
   body
 }: UpdateColaboratorProps) {
   const { name, registration, sectorId } = body
-  await api.put(`/colaborators/${colaboratorId}`, {
+  await api.put(`/collaborators/${colaboratorId}`, {
     name,
     registration,
     sectorId

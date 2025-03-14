@@ -1,4 +1,4 @@
-import { UpdateColaboratorForm } from "./update-colaborators-form";
+import { UpdateColaboratorForm } from "./update-collaborators-form";
 
 export function UpdateColaborator() {
   return (

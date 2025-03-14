@@ -16,7 +16,7 @@ export interface GetColaboratorResponse {
 export async function getColaborator(
   colaboratorId: string
 ): Promise<GetColaboratorResponse> {
-  const response = await api.get(`/colaborators/${colaboratorId}`)
+  const response = await api.get(`/collaborators/${colaboratorId}`)
 
   return response.data
 }

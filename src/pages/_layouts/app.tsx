@@ -23,6 +23,13 @@ export function AppLayout() {
       </header>
 
       <Outlet />
+
+
+      <footer className="bg-secondary w-full h-12 flex items-center justify-center border-t-2 border-primary">
+        <span className="text-xs text-primary-foreground font-bold">
+          Desenvolvido com 💙 por Eduardo Rodrigues
+        </span>
+      </footer>
     </div>
   )
 }

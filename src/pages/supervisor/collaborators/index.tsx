@@ -4,11 +4,11 @@ import { MenuTableSkeleton } from "@/pages/restaurant/menu/menu-table-skeleton"
 import { useQuery } from "@tanstack/react-query"
 import { useSearchParams } from "react-router-dom"
 import { z } from "zod"
-import { ColaboratorsTableRow } from "./colaborator-table-row"
-import { getColaboratorsBySector } from "@/api/get-colaborators-by-sector"
+import { CollaboratorsTableRow } from "./colaborator-table-row"
+import { getCollaboratorsBySector } from "@/api/get-collaborators-by-sector"
 import { ColaboratorTableFilter } from "./colaborator-table-filters"
 
-export function Colaborators() {
+export function Collaborators() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const pageIndex = z.coerce
@@ -20,9 +20,9 @@ export function Colaborators() {
   const registration = searchParams.get('matricula')
   const sector = searchParams.get('setor')
 
-  const { data: result, isLoading: isLoadingColaborators } = useQuery({
-    queryKey: ['colaborators-by-sector', pageIndex, colaboratorName, registration, sector],
-    queryFn: () => getColaboratorsBySector({
+  const { data: result, isLoading: isLoadingCollaborators } = useQuery({
+    queryKey: ['collaborators-by-sector', pageIndex, colaboratorName, registration, sector],
+    queryFn: () => getCollaboratorsBySector({
       pageIndex,
       registration,
       colaboratorName,
@@ -57,10 +57,10 @@ export function Colaborators() {
           </TableHeader>
 
           <TableBody>
-            { isLoadingColaborators && <MenuTableSkeleton />}
-            { result && result.colaborators.map((colaborator) => {
+            { isLoadingCollaborators && <MenuTableSkeleton />}
+            { result && result.collaborators.map((colaborator) => {
               return (
-                <ColaboratorsTableRow
+                <CollaboratorsTableRow
                   key={colaborator.colaborator_id}
                   data={colaborator}
                 />

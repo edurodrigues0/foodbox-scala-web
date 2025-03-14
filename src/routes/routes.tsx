@@ -7,8 +7,8 @@ import { DashboardLayout } from '@/pages/_layouts/dashboard'
 import { Dashboard } from '@/pages/app/dashboard'
 import { Menu } from '@/pages/restaurant/menu/menu'
 import { Orders } from '@/pages/restaurant/orders/orders'
-import { Colaborators } from '@/pages/admin/colaborators/colaborators'
-import { RegisterColaborator } from '@/pages/admin/colaborators/register/register-colaborator'
+import { Collaborators } from '@/pages/admin/collaborators/collaborators'
+import { RegisterColaborator } from '@/pages/admin/collaborators/register/register-colaborator'
 import { Units } from '@/pages/admin/units/units'
 import { Sectors } from '@/pages/admin/sectors/sectors'
 import { Restaurants } from '@/pages/admin/restaurants/restaurants'
@@ -16,8 +16,8 @@ import { Orders as AdminOrders } from '@/pages/admin/orders/orders'
 import { Users } from '@/pages/admin/users/users'
 import { Unauthorized } from '@/pages/unauthorized'
 import { PublicRoute } from './public-routes'
-import { UpdateColaborator } from '@/pages/admin/colaborators/update/update-colaborator'
-import { Colaborators as SupervisorColaborators } from '@/pages/supervisor/colaborators'
+import { UpdateColaborator } from '@/pages/admin/collaborators/update/update-colaborator'
+import { Collaborators as SupervisorCollaborators } from '@/pages/supervisor/collaborators'
 import { Orders as SupervisorOrders } from '@/pages/supervisor/orders'
 
 export function AppRoutes() {
@@ -43,7 +43,7 @@ export function AppRoutes() {
         { /* Supervisor Route */ }
         <Route element={ <ProtectedRoute requiredRoles={['supervisor']} /> }>
           <Route element={ <DashboardLayout /> }>
-            <Route path='/supervisor/colaboradores' element={ <SupervisorColaborators /> } />
+            <Route path='/supervisor/colaboradores' element={ <SupervisorCollaborators /> } />
             <Route path='/supervisor/pedidos' element={ <SupervisorOrders /> } />
           </Route>
         </Route>
@@ -52,7 +52,7 @@ export function AppRoutes() {
         <Route element={ <ProtectedRoute requiredRoles={['rh', 'supervisor']} /> }>
           <Route element={ <DashboardLayout /> }>
             {/* <Route path='/admin/dashboard' element={ <RhDashboard /> } /> */}
-            <Route path='/admin/colaboradores' element={ <Colaborators /> } />
+            <Route path='/admin/colaboradores' element={ <Collaborators /> } />
             <Route path='/admin/colaboradores/cadastro' element={ <RegisterColaborator /> } />
             <Route path='/colaboradores/:colaboratorId/editar' element={ <UpdateColaborator /> } />
             <Route path='/admin/usuarios' element={ <Users /> } />
