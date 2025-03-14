@@ -18,7 +18,7 @@ export function Sectors() {
   const unit = searchParams.get('unidade')
   const sector = searchParams.get('setor')
 
-  const { data: result, isLoading: isUnitLoading } = useQuery({
+  const { data: result, isLoading: _isUnitLoading } = useQuery({
     queryFn: () => getAllSectors({
       pageIndex,
       unit,

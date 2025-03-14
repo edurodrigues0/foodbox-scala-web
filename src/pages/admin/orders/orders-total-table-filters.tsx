@@ -7,7 +7,7 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
 export function OrdersTotalTableFilters() {
-  const [dataRange, setDateRange] = useState<DateRange | undefined>({
+  const [dataRange, _setDateRange] = useState<DateRange | undefined>({
     from: subDays(new Date(), 7),
     to: new Date(),
   })

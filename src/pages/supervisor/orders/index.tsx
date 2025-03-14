@@ -28,7 +28,7 @@ export function Orders() {
     }),
   })
 
-  const { mutateAsync: deleteOrderFn, isPending: isDeleteOrder } = useMutation({
+  const { mutateAsync: deleteOrderFn, isPending: _isDeleteOrder } = useMutation({
     mutationFn: deleteOrder,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders', pageIndex] })

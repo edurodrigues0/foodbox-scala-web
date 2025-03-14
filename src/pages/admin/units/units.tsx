@@ -5,7 +5,7 @@ import { getUnits } from "@/api/get-units";
 import { UnitsTableRow } from "./units-table-row";
 
 export function Units() {
-  const { data: result, isLoading: isUnitLoading } = useQuery({
+  const { data: result, isLoading: _isUnitLoading } = useQuery({
     queryFn: getUnits,
     queryKey: ['units']
   })

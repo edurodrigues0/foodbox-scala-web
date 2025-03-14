@@ -15,7 +15,7 @@ export function Users() {
 
   const {
     data: result,
-    isLoading: isUsersLoading
+    isLoading: _isUsersLoading
   } = useQuery({
     queryFn: getUsers,
     queryKey: ['users']

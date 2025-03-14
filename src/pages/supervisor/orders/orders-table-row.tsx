@@ -1,8 +1,5 @@
-import { DeleteMenuParams } from "@/api/delete-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Edit2, Trash, X } from "lucide-react";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { X } from "lucide-react";
 
 interface Order {
   id: string

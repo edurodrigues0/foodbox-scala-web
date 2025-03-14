@@ -10,13 +10,12 @@ import {
 } from "@/components/ui/dialog";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { createMenu } from "@/api/create-menu";
 import { toast } from "sonner";
 import { Accompaniments } from "@/components/accompaniments";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { getMenu } from "@/api/get-menu";
 
 const createMenuForm = z.object({
   name: z.string(),

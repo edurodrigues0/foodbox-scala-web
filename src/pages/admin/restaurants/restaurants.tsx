@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getRestaurants } from "@/api/get-restaurants";
 
 export function Restaurants() {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, _setSearchParams] = useSearchParams()
 
   const pageIndex = z.coerce
   .number()
@@ -16,7 +16,7 @@ export function Restaurants() {
 
   const {
     data: result,
-    isLoading: isRestaurantsLoading
+    // isLoading: isRestaurantsLoading
   } = useQuery({
     queryFn: () => getRestaurants({
       pageIndex,

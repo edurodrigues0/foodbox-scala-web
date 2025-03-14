@@ -29,7 +29,7 @@ export function ColaboratorTableFilter() {
       colaboratorName: colaboratorName ?? "",
       unit: unit ?? "",
       sector: sector ?? "",
-      registration: registration ?? undefined
+      registration: registration ? Number(registration) : undefined
     }
   })
 
@@ -53,7 +53,7 @@ export function ColaboratorTableFilter() {
       }
 
       if (registration) {
-        prevState.set('matricula', registration.toString())
+        prevState.set('matricula', registration ? registration.toString() : '')
       } else {
         prevState.delete('matricula')
       }

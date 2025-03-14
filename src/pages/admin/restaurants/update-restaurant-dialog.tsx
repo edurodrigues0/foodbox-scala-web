@@ -37,7 +37,7 @@ export function UpdateRestaurantDialog({
     register,
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    // formState: { isSubmitting },
   } = useForm<UpdateRestaurantFormSchema>()
 
   const { data: unitResult } = useQuery({

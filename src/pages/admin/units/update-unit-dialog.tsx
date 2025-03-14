@@ -43,7 +43,7 @@ export function UpdateUnitDialog({
 
   const {
     mutateAsync: updateUnitFn,
-    isPending: isUpdateUnit
+    isPending: _isUpdateUnit
   } = useMutation({
     mutationFn: updateUnit,
     onSuccess: () => {

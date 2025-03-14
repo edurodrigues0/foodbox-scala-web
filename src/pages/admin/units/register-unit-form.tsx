@@ -1,5 +1,4 @@
 import { createUnit } from "@/api/create-unit"
-import { getUnits } from "@/api/get-units"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"

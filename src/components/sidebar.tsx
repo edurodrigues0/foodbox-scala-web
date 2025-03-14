@@ -1,5 +1,4 @@
 import {
-  Home,
   Utensils,
   SquareMenu,
   LucideProps,

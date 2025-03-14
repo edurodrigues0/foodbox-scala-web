@@ -45,7 +45,7 @@ export function UpdateSectorDialog({
 
   const {
     mutateAsync: updateSectorFn,
-    isPending: isUpdateSecotr,
+    isPending: _isUpdateSector,
   } = useMutation({
     mutationFn: updateSector,
     onSuccess: () => {

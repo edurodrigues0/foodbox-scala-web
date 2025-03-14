@@ -1,7 +1,5 @@
 import { DeleteMenuParams } from "@/api/delete-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Edit2 } from "lucide-react";
-import { Link } from "react-router-dom";
 
 interface Colaborator {
   colaborator_id: string

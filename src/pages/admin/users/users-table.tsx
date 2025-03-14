@@ -1,5 +1,5 @@
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Edit2, X } from "lucide-react";
+import { X } from "lucide-react";
 
 interface User {
   id: string

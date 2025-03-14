@@ -20,7 +20,7 @@ export function Orders() {
 
   const {
     data: result,
-    isLoading: isOrdersLoading,
+    isLoading: _isOrdersLoading,
   } = useQuery({
     queryFn: () => getAllOrders({
       pageIndex,
