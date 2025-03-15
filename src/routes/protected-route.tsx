@@ -29,9 +29,9 @@ export function ProtectedRoute({ requiredRoles }: ProtectedRouteProps) {
     return <Navigate to='/login' replace />
   }
 
-  if (requiredRoles && !requiredRoles.includes(user.role ?? "")) {
-    return <Navigate to='/unauthorized' replace />
-  }
+  // if (requiredRoles && !requiredRoles.includes(user.role ?? "")) {
+  //   return <Navigate to='/unauthorized' replace />
+  // }
 
   return <Outlet />
 }
