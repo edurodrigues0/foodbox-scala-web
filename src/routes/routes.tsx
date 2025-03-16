@@ -4,7 +4,6 @@ import { Login } from '@/pages/app/login'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ProtectedRoute } from './protected-route'
 import { DashboardLayout } from '@/pages/_layouts/dashboard'
-import { Dashboard } from '@/pages/app/dashboard'
 import { Menu } from '@/pages/restaurant/menu/menu'
 import { Orders } from '@/pages/restaurant/orders/orders'
 import { Collaborators } from '@/pages/admin/collaborators/collaborators'
@@ -19,6 +18,7 @@ import { PublicRoute } from './public-routes'
 import { UpdateColaborator } from '@/pages/admin/collaborators/update/update-colaborator'
 import { Collaborators as SupervisorCollaborators } from '@/pages/supervisor/collaborators'
 import { Orders as SupervisorOrders } from '@/pages/supervisor/orders'
+import { History } from '@/pages/app/history'
 
 export function AppRoutes() {
   return (
@@ -28,13 +28,13 @@ export function AppRoutes() {
           <Route element={ <AppLayout /> }>
             <Route index element={ <Home /> } />
             <Route path='/login' element={ <Login /> } />
+            <Route path='/historico' element={ <History /> } />
           </Route>
         </Route>
         
         { /* Restaurant Routes */ }
         <Route element={ <ProtectedRoute requiredRoles={['restaurant']} /> }>
           <Route element={ <DashboardLayout /> }>
-            <Route path='/restaurante/dashboard' element={ <Dashboard /> } />
             <Route path='/restaurante/pedidos' element={ <Orders /> } />
             <Route path='/restaurante/cardapio' element={ <Menu /> } />
           </Route>
@@ -49,7 +49,7 @@ export function AppRoutes() {
         </Route>
 
         { /* Admin Routes */ }
-        <Route element={ <ProtectedRoute requiredRoles={['rh', 'supervisor']} /> }>
+        <Route element={ <ProtectedRoute requiredRoles={['rh', 'admin']} /> }>
           <Route element={ <DashboardLayout /> }>
             {/* <Route path='/admin/dashboard' element={ <RhDashboard /> } /> */}
             <Route path='/admin/colaboradores' element={ <Collaborators /> } />

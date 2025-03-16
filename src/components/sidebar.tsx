@@ -63,7 +63,7 @@ export function Sidebar({ role }: SidebarProps) {
 
   return (
     <nav className="h-full w-44 flex flex-col justify-start p-6 space-y-8">
-      {role === "admin" && (
+      {role === "admin" || role === 'rh' && (
         <>
           <NavLink to='/admin/colaboradores' title='Colaboradores' icon={Users2} />
           <NavLink to='/admin/usuarios' title='Usuários' icon={ClipboardList} />
