@@ -1,5 +1,4 @@
 import { useTheme } from "@/components/theme/theme-provider";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
