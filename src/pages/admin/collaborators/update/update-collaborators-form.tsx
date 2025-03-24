@@ -12,6 +12,7 @@ import { getColaborator } from "@/api/get-colaborator"
 import { z } from "zod"
 import { updateColaborator } from "@/api/update-colaborator"
 import { toast } from "sonner"
+import InputMask from "react-input-mask"
 
 const updateColaboratorFormSchema = z.object({
   name: z.string().optional(),
@@ -61,7 +62,7 @@ export function UpdateColaboratorForm() {
         colaboratorId: String(params.colaboratorId),
         body: {
           name: data.name !== "" ? data.name : undefined,
-          registration: Number(data.registration) * 1,
+          registration: data.registration ? Number(data.registration) * 1 : undefined,
           sectorId: data.sectorId,
         }
       })
@@ -109,14 +110,21 @@ export function UpdateColaboratorForm() {
 
       <div className="space-y-2">
         <Label htmlFor="registration">CPF</Label>
-        <Input
-          id="cpf"
-          disabled
-          className="border-blue-500"
-          autoComplete="off"
+        <InputMask
+          mask="999.999.999-99"
           {...register("cpf")}
-          value={result?.colaborator.colaborator_cpf}
-        />
+          defaultValue={result?.colaborator.colaborator_cpf}
+        >
+          {(inputProps: any) => (
+            <Input
+              {...inputProps}
+              id="cpf"
+              placeholder="000.000.000-00"
+              autoComplete="off"
+              className="border-blue-500 [&::-webkit-inner-spin-button]:appearance-none"
+            />
+          )}
+        </InputMask>
       </div>
 
       <div className="space-y-2">
@@ -179,7 +187,7 @@ export function UpdateColaboratorForm() {
         variant="secondary"
         className="w-full font-bold"
         disabled={isSubmitting}
-        onClick={() => {navigate('/colaboradores')}}
+        onClick={() => {navigate('/admin/colaboradores')}}
       >
         Voltar
       </Button>

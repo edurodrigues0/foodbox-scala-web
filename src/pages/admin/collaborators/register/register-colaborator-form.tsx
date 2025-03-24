@@ -1,3 +1,5 @@
+import InputMask from "react-input-mask"
+
 import { createColaborator } from "@/api/create-colaborator";
 import { getSectors } from "@/api/get-sectors";
 import { getUnits } from "@/api/get-units";
@@ -95,12 +97,21 @@ export function RegisterColaboratorForm() {
 
       <div className="space-y-2">
         <Label htmlFor="registration">CPF</Label>
-        <Input
-          id="cpf"
-          className="border-blue-500"
-          autoComplete="off"
+
+        <InputMask
+          mask="999.999.999-99"
           {...register("cpf")}
-        />
+        >
+          {(inputProps: any) => (
+            <Input
+              {...inputProps}
+              id="cpf"
+              placeholder="000.000.000-00"
+              autoComplete="off"
+              className="border-blue-500 [&::-webkit-inner-spin-button]:appearance-none"
+            />
+          )}
+        </InputMask>
       </div>
 
       <div className="space-y-2">
@@ -108,7 +119,7 @@ export function RegisterColaboratorForm() {
         <Select
           onValueChange={(unit) => setSelectedUnit(unit)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full border-blue-500">
             <SelectValue />
           </SelectTrigger>
 
@@ -139,7 +150,7 @@ export function RegisterColaboratorForm() {
               value={value}
               disabled={disabled || isSectorsLoading || !sectorResult}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full border-blue-500">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
