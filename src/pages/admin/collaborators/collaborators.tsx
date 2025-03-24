@@ -74,7 +74,8 @@ export function Collaborators() {
               <TableHead>Nome</TableHead>
               <TableHead>Unidade</TableHead>
               <TableHead>Setor</TableHead>
-              <TableHead></TableHead>
+              <TableHead>Editar</TableHead>
+              <TableHead>Deletar</TableHead>
             </TableHeader>
 
             <TableBody>

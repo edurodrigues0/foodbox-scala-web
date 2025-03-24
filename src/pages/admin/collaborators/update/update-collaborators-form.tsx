@@ -72,7 +72,7 @@ export function UpdateColaboratorForm() {
         className: 'flex flex-col',
         action: {
           label: "Voltar para lista de colaboradores",
-          onClick: () => navigate("/rh/dashboard/colaboradores"),
+          onClick: () => navigate("/admin/colaboradores"),
         },
       })
     } catch {

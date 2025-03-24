@@ -8,15 +8,32 @@ import { useSearchParams } from "react-router-dom"
 import { z } from "zod"
 import { useQuery } from "@tanstack/react-query"
 import { getAllOrders } from "@/api/get-all-orders"
+import { subMonths, setDate } from "date-fns"
+import { useState } from "react"
+import { DateRange } from "react-day-picker"
 
 export function Orders() {
   const { user } = useAuth()
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const today = new Date()
+  const lastMonth = subMonths(today, 1)
+  const penultMonth = subMonths(today, 2)
+
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: setDate(lastMonth, 20),
+    to: setDate(penultMonth, 20)
+  })
+
   const pageIndex = z.coerce
   .number()
   .transform((page) => page - 1)
   .parse(searchParams.get('page') ?? '1')
+
+  const colaboratorName = searchParams.get('nome')
+  const registration = searchParams.get('matricula')
+  const unit = searchParams.get('unidade')
+  const cpf = searchParams.get('cpf')
 
   const {
     data: result,
@@ -24,8 +41,14 @@ export function Orders() {
   } = useQuery({
     queryFn: () => getAllOrders({
       pageIndex,
+      from: dateRange?.from,
+      to: dateRange?.to,
+      colaboratorName,
+      cpf,
+      registration,
+      unit,
     }),
-    queryKey: ['orders', pageIndex],
+    queryKey: ['orders', pageIndex, dateRange, colaboratorName, unit, cpf, registration],
   })
 
   function handlePaginate(pageIndex: number) {
@@ -45,7 +68,10 @@ export function Orders() {
 
         { user?.role === 'rh' && (
           <div className="flex flex-1 flex-col p-4 gap-4">
-            <OrdersTotalTableFilters />
+            <OrdersTotalTableFilters
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+            />
 
             <Table>
               <TableHeader>
