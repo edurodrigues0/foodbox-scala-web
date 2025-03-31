@@ -1,15 +1,15 @@
 import { api } from "@/lib/axios"
 
 export interface CreateOrderBody {
-  cpf: string
+  registration: number
   menuId: string
   orderDate: string
   restaurantId: string
 }
 
-export async function createOrder({ cpf, menuId, orderDate, restaurantId }: CreateOrderBody) {
+export async function createOrder({ registration, menuId, orderDate, restaurantId }: CreateOrderBody) {
   const { data } = await api.post('/orders', {
-    cpf,
+    registration,
     restaurantId,
     menuId,
     orderDate,

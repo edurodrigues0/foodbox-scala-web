@@ -16,13 +16,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getMenusTodayAndTomorrow } from "@/api/get-menus-today-and-tomorrow";
 import { MenuDescription } from "@/pages/restaurant/menu/menu-description";
 import { UtensilsCrossed, X } from "lucide-react";
-import InputMask from "react-input-mask"
+import { ConfirmOrderDialog } from "./confirm-order.dialog";
 
 const createOrderForm = z.object({
-  cpf: z
-    .string()
-    .min(11, "CPF deve ter no mínimo 11 caracteres")
-    .max(14, "CPF deve ter no máximo 14 caracteres"),
+  registration: z
+    .number()
+    .min(1, "Matrícula deve ter pelo menos 1 dígito")
+    .max(11, "Matrícula deve ter no máximo 11 dígitos")
 });
 
 type CreateOrderForm = z.infer<typeof createOrderForm>;
@@ -40,17 +40,17 @@ export function Home() {
   const [isActiveTodayButton, setIsActiveTodayButton] = useState(false);
   const [isActiveTomorrowButton, setIsActiveTomorrowButton] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState("");
+  const [isConfirmDialog, setIsConfirmDialog] = useState(false)
 
   const {
     reset,
     register,
     handleSubmit,
+    watch,
     formState: { isSubmitting },
-  } = useForm<CreateOrderForm>({
-    defaultValues: {
-      cpf: "",
-    },
-  });
+  } = useForm<CreateOrderForm>()
+
+  const registration = watch("registration")
 
   const { data: unitsResponse } = useQuery({
     queryKey: ["units"],
@@ -98,7 +98,7 @@ export function Home() {
 
     try {
       const { name } = await createOrderFn({
-        cpf: data.cpf,
+        registration: data.registration,
         orderDate: new Date(currentMenu!.service_date).toISOString(),
         restaurantId: unit.restaurant_id!,
         menuId: currentMenu!.menu_id,
@@ -115,6 +115,7 @@ export function Home() {
         position: "top-center",
       });
     } finally {
+      setIsConfirmDialog(false)
       reset();
     }
   }
@@ -199,21 +200,14 @@ export function Home() {
       >
         <form onSubmit={handleSubmit(handleCreateOrder)} className="space-y-4">
           <div className="space-y-2 relative">
-            <Label htmlFor="cpf">Seu CPF</Label>
-            <InputMask
-              mask="999.999.999-99"
-              {...register("cpf")}
-            >
-              {(inputProps: any) => (
-                <Input
-                  {...inputProps}
-                  id="cpf"
-                  placeholder="000.000.000-00"
-                  autoComplete="off"
-                  className="[&::-webkit-inner-spin-button]:appearance-none"
-                />
-              )}
-            </InputMask>
+            <Label htmlFor="registration">Matrícula</Label>
+            <Input
+              id="registration"
+              placeholder="Sua matrícula"
+              autoComplete="off"
+              {...register("registration", { valueAsNumber: true })} // Captura corretamente a matrícula
+              className="[&::-webkit-inner-spin-button]:appearance-none"
+            />
 
             <button
               type="button"
@@ -224,15 +218,21 @@ export function Home() {
             </button>
           </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={
-              isSubmitting || !selectedUnit || isMenusFetching || !hasMenus
-            }
+          <ConfirmOrderDialog
+            setIsOpen={setIsConfirmDialog}
+            isOpen={isConfirmDialog}
+            registration={registration}
+            onConfirm={() => handleSubmit(handleCreateOrder)()}
           >
-            Solicitar Marmita
-          </Button>
+            <Button
+              className="w-full"
+              disabled={
+                isSubmitting || !selectedUnit || isMenusFetching || !hasMenus
+              }
+            >
+              Solicitar Marmita
+            </Button>
+          </ConfirmOrderDialog>
         </form>
       </Card>
     </div>
