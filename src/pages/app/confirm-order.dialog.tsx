@@ -50,6 +50,7 @@ export function ConfirmOrderDialog({
         </DialogHeader>
 
         <DialogFooter>
+        <Button onClick={() => setIsOpen(false)} variant="destructive">Cancelar</Button>
           <Button
             variant="success"
             onClick={onConfirm}
@@ -57,7 +58,6 @@ export function ConfirmOrderDialog({
           >
             Sim, Confirmar
           </Button>
-          <Button onClick={() => setIsOpen(false)} variant="destructive">Cancelar</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

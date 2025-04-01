@@ -6,11 +6,11 @@ interface GetOrdersForCurrentBillingCycleResponse {
 }
 
 export async function getOrdersForCurrentBillingCycle(
-  cpf: string
+  registration: number
 ): Promise<GetOrdersForCurrentBillingCycleResponse> {
   const response = await api.get('/orders-for-current-billing-cycle', {
     params: {
-      cpf,
+      registration,
     }
   })
 

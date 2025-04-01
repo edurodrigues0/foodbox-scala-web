@@ -1,5 +1,3 @@
-import InputMask from "react-input-mask"
-
 import { z } from "zod"
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form";
@@ -12,24 +10,20 @@ import { Loader2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const historyForm = z.object({
-  cpf: z
+  registration: z
     .string()
-    .min(11, "CPF deve ter no mínimo 11 caracteres")
-    .max(14, "CPF deve ter no máximo 14 caracteres"),
+    .min(1, "Matricula deve ter no mínimo 1 numero")
+    .max(11, "Matricula deve ter no máximo 11 numeros"),
 });
 
 type HistoryForm = z.infer<typeof historyForm>;
 
 export function History() {
-  const [cpf, setCpf] = useState("")
+  const [registration, setRegistration] = useState<number | null>()
 
   const {
     handleSubmit,
-  } = useForm<HistoryForm>({
-    defaultValues: {
-      cpf: "",
-    },
-  })
+  } = useForm<HistoryForm>()
 
   const {
     data: result,
@@ -42,8 +36,16 @@ export function History() {
 
   async function handleGetOrdersForCurrentBillingCycle() {
     try {
-      await getCurrentOrders(cpf)
-      setCpf("")
+      if (registration === 0) {
+        return
+      }
+
+      if (!registration) {
+        throw new Error()
+      }
+
+      await getCurrentOrders(registration)
+      setRegistration(null)
     } catch (error) {
       toast.error('Falha ao obter histórico!', {
         position: 'top-center',
@@ -58,21 +60,15 @@ export function History() {
       </h1>
 
       <form className="flex gap-4" onSubmit={handleSubmit(handleGetOrdersForCurrentBillingCycle)}>
-        <InputMask
-          mask="999.999.999-99"
-          onChange={(e) => setCpf(e.target.value)}
-          value={cpf}
-        >
-          {(inputProps: any) => (
-            <Input
-              {...inputProps}
-              id="cpf"
-              placeholder="000.000.000-00"
-              autoComplete="off"
-              className="[&::-webkit-inner-spin-button]:appearance-none"
-            />
-          )}
-        </InputMask>
+        <Input
+          id="registration"
+          placeholder="Sua mátricula"
+          autoComplete="off"
+          type="number"
+          value={registration?.toString()}
+          onChange={(event) => setRegistration(Number(event.target.value))}
+          className="[&::-webkit-inner-spin-button]:appearance-none"
+        />
 
         <Button
           type="submit"
