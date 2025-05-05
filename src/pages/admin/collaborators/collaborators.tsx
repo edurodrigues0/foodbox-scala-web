@@ -54,16 +54,16 @@ export function Collaborators() {
           </h1>
 
           <div className="flex flex-col p-4">
+            <Button
+              onClick={() => navigate('/admin/colaboradores/cadastro')}
+              variant="secondary"
+              size="sm"
+              className="font-semibold w-fit mb-4"
+            >
+              <PlusCircle className="w-4 h-4" />
+              Adicionar novo colaborador
+            </Button>
             <div className="flex flex-1 justify-between">
-              <Button
-                onClick={() => navigate('/admin/colaboradores/cadastro')}
-                variant="link"
-                className="font-semibold w-fit"
-              >
-                <PlusCircle className="w-4 h-4" />
-                Adicionar novo colaborador
-              </Button>
-
               <ColaboratorTableFilter />
             </div>
           </div>
@@ -79,8 +79,8 @@ export function Collaborators() {
             </TableHeader>
 
             <TableBody>
-              { isLoadingCollaborators && <MenuTableSkeleton />}
-              { result && result.collaborators.map((colaborator) => {
+              {isLoadingCollaborators && <MenuTableSkeleton />}
+              {result && result.collaborators.map((colaborator) => {
                 return (
                   <CollaboratorsTableRow
                     key={colaborator.colaborator_id}
@@ -91,7 +91,7 @@ export function Collaborators() {
             </TableBody>
           </Table>
 
-          { result && (
+          {result && result.collaborators.length > 0 && (
             <Pagination
               pageIndex={result.meta.page_index}
               perPage={result.meta.per_page}
