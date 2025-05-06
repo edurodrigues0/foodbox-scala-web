@@ -29,10 +29,7 @@ interface SidebarProps {
 export function Sidebar({ role }: SidebarProps) {
   // Normaliza a role para evitar problemas de formatação
   const normalizedRole = role?.toLowerCase().trim() || "";
-
-  console.log("🔍 Role recebida:", role);
-  console.log("🔄 Role normalizada:", normalizedRole);
-
+  
   const linksByRole: LinksByRole = {
     restaurant: [
       { to: "/restaurante/cardapio", title: "Cardápio", icon: SquareMenu },

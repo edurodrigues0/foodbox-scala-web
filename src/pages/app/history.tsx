@@ -118,7 +118,7 @@ export function History() {
         <span className="text-base">Valor atual da marmita: R$ 2,15</span>
       </div>
 
-      <Button className="w-96" asChild>
+      <Button className="w-96 mb-20" asChild>
         <Link to="/">
             Voltar
         </Link>

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createMenu } from "@/api/create-menu";
 import { toast } from "sonner";
 import { Accompaniments } from "@/components/accompaniments";
@@ -27,6 +27,8 @@ const createMenuForm = z.object({
 type CreateMenuForm = z.infer<typeof createMenuForm>
 
 export function MenuDialog() {
+  const queryClient = useQueryClient()
+
   const {
     handleSubmit,
     register,
@@ -47,6 +49,9 @@ export function MenuDialog() {
 
   const { mutateAsync: createMenuFn } = useMutation({
     mutationFn: createMenu,
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['menu'] })
+    },
   })
 
   const handleAddAccompaniment = () => {

@@ -32,6 +32,9 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "@/components/ui/radio-group";
+import { Stepper } from "./components/home/stepper";
+import { AxiosError } from "axios";
+import { ConfirmOrderDialog } from "./components/home/confirm-order.dialog";
 
 const createOrderForm = z.object({
   registration: z
@@ -50,8 +53,8 @@ export function Home() {
 
   const {
     register,
-    reset,
     watch,
+    setValue,
     formState: { isSubmitting },
   } = useForm<CreateOrderForm>();
 
@@ -92,6 +95,7 @@ export function Home() {
 
     try {
       const { name } = await createOrderFn({
+        unitId: selectedUnit,
         registration: Number(registration),
         orderDate: new Date(menu!.service_date).toISOString(),
         restaurantId: unit.restaurant_id!,
@@ -103,10 +107,32 @@ export function Home() {
         position: "top-center",
       });
       setModalOpen(false);
-      reset();
+      setValue("registration", "")
+      setSelectedMenuId("")
+      setSelectedUnit("")
       setStep(1);
     } catch (error) {
       console.error(error);
+      if (error instanceof AxiosError) {
+        if (error.status === 403) {
+          return toast.error("Colaborador não é dessa unidade", {
+            position: "top-center",
+          })
+        }
+
+        if (error.status === 404) {
+          return toast.error("Colaborador ou cardápio não encontrado", {
+            position: "top-center",
+          })
+        }
+
+        if (error.status === 409) {
+          return toast.error("Marmita já solicitada", {
+            position: "top-center",
+          })
+        }
+      }
+
       toast.error("Erro ao solicitar marmita.", {
         position: "top-center",
       });
@@ -130,24 +156,10 @@ export function Home() {
     <div className="container mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold text-center mb-8">Solicitação de Marmita</h1>
 
-      <div className="flex justify-center mb-8">
-        <div className="flex items-center">
-          {[MapPin, UtensilsCrossed, User].map((Icon, idx) => (
-            <>
-              <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full ${
-                  step >= idx + 1 ? "bg-primary text-white" : "bg-muted"
-                }`}
-              >
-                <Icon size={20} />
-              </div>
-              {idx < 2 && <div className={`h-1 w-12 ${step > idx + 1 ? "bg-primary" : "bg-muted"}`}></div>}
-            </>
-          ))}
-        </div>
-      </div>
+      {/* Stepper */}
+      <Stepper step={step} />
 
-      <Card className="max-w-lg h-96 mx-auto flex flex-col justify-between">
+      <Card className="max-w-lg h-96 mx-auto flex flex-col justify-between shadow-md">
         <CardHeader>
           <CardTitle>
             {step === 1 && "Escolha a Unidade"}
@@ -161,9 +173,9 @@ export function Home() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {step === 1 && (
+          {step === 1 && unitsResponse && (
             <RadioGroup value={selectedUnit} onValueChange={setSelectedUnit}>
-              {unitsResponse?.units_and_restaurants.map((unit) => (
+              {unitsResponse.units_and_restaurants.map((unit) => (
                 <div key={unit.unit_id} className="flex items-center space-x-2 mb-3">
                   <RadioGroupItem value={unit.unit_id} id={unit.unit_id} />
                   <Label htmlFor={unit.unit_id}>{unit.unit_name}</Label>
@@ -225,31 +237,14 @@ export function Home() {
       </Card>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirmar Pedido</DialogTitle>
-            <DialogDescription>Confirme os dados abaixo antes de solicitar sua marmita.</DialogDescription>
-          </DialogHeader>
-          <div className="py-4 space-y-2">
-            <div className="text-sm">Matrícula: {registration}</div>
-            <div className="text-sm">
-              Unidade: {
-                unitsResponse?.units_and_restaurants.find(u => u.unit_id === selectedUnit)?.unit_name || "-"
-              }
-            </div>
-            <div className="text-sm">
-              Marmita: {
-                currentMenu?.map(menu => menu.menu_description).join(", ") || "-"
-              }
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setModalOpen(false)}>Cancelar</Button>
-            <Button onClick={handleConfirm} disabled={isSubmitting}>
-              <Check className="mr-2 h-4 w-4" /> Confirmar
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+        <ConfirmOrderDialog
+          registration={registration}
+          isSubmitting={isSubmitting}
+          onConfirm={handleConfirm}
+          onOpen={setModalOpen}
+          unit={unitsResponse?.units_and_restaurants.find(u => u.unit_id === selectedUnit)?.unit_name.toUpperCase() || "-"}
+          menu={currentMenu?.map(menu => menu.menu_name.toUpperCase()) || ""}
+        />
       </Dialog>
     </div>
   );

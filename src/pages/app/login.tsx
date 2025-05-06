@@ -41,26 +41,25 @@ export function Login() {
         position: 'top-center'
       })
     }
-
+  
     try {
-      const { user } = await authenticateFn({
+      const { user, auth_metadata } = await authenticateFn({
         email: data.email,
         password: data.password,
       })
-
-      if (user) {
+  
+      if (user && auth_metadata?.token) {
+        localStorage.setItem('@foodbox.scala:token', auth_metadata.token)
+  
         localStorage.setItem('@foodbox.scala:auth', JSON.stringify(user))
+  
         setUser(user)
       }
-
+  
       if (user.role === 'restaurant') {
-        navigate('/restaurante/cardapio', {
-          replace: true,
-        })
+        navigate('/restaurante/cardapio', { replace: true })
       } else if (user.role === 'rh') {
-        navigate('/admin/colaboradores', {
-          replace: true,
-        }) 
+        navigate('/admin/colaboradores', { replace: true })
       }
     } catch {
       toast.error('Não foi possível se autenticar, tente novamente.', {

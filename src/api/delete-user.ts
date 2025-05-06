@@ -4,7 +4,7 @@ export async function deleteUser(userId: string): Promise<void> {
   try {
     const response = await api.delete(`/users/${userId}`)
 
-    console.log(response.data)
+    return response.data
   } catch (error: any) {
     if (error.response) {
       throw new Error(JSON.stringify({

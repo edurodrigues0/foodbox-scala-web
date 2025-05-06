@@ -11,9 +11,9 @@ export function AppLayout() {
   }, [])
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <header className="bg-primary text-primary-foreground p-4 flex items-center justify-between">
-        <h1 className="text-4xl text-primary-foreground font-bold select-none">
+        <h1 className="text-2xl text-primary-foreground font-bold select-none">
           Scala
         </h1>
 
@@ -30,8 +30,8 @@ export function AppLayout() {
       <Outlet />
 
 
-      <footer className="bg-secondary w-full h-12 flex items-center justify-center border-t-2 border-primary">
-        <span className="text-xs text-secondary-foreground font-bold">
+      <footer className="bg-secondary w-full h-16 flex items-center justify-center border-t-2 border-primary">
+        <span className="text-xs text-secondary-foreground font-semibold">
           Desenvolvido com 💙 por Eduardo Rodrigues
         </span>
       </footer>
