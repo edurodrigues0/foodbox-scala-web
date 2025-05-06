@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { getUnits } from "@/api/get-units";
 import { getMenusTodayAndTomorrow } from "@/api/get-menus-today-and-tomorrow";
-import { Check, ChevronRight, MapPin, User, UtensilsCrossed } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -20,14 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+
 import {
   RadioGroup,
   RadioGroupItem,
@@ -35,6 +28,7 @@ import {
 import { Stepper } from "./components/home/stepper";
 import { AxiosError } from "axios";
 import { ConfirmOrderDialog } from "./components/home/confirm-order.dialog";
+import { Dialog } from "@/components/ui/dialog";
 
 const createOrderForm = z.object({
   registration: z
