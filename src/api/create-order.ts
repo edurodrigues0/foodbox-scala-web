@@ -8,12 +8,13 @@ export interface CreateOrderBody {
 }
 
 export async function createOrder({ registration, menuId, orderDate, restaurantId }: CreateOrderBody) {
-  const { data } = await api.post('/orders', {
+  
+  const response = await api.post('/orders', {
     registration,
     restaurantId,
     menuId,
     orderDate,
   })
 
-  return data
+  return response.data
 }
